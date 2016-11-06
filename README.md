@@ -16,6 +16,12 @@ maintaining a software project.
 
 
 
+## Submit an issue
+
+[Skeleton issues](https://github.com/andrewwoods/skeleton/issues)
+
+
+
 ## Credits and Acknowledgments
 
 * **Project Creator**:  [Andrew Woods](http://andrewwoods.net) on [GitHub](https://github.com/andrewwoods/)
