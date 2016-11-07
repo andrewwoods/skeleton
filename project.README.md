@@ -15,11 +15,21 @@ get them interested.
 ## Ideas for sections/pages
 
 * Features
-* Installation
 * Language Translations 
 * Frequently Asked Questions (FAQ)
 * Screenshots
 * Submit Issues
+
+
+
+## Installation
+
+* Put your code into _src_
+* [Create a Git Ignore](https://www.gitignore.io/) file
+    - Add the phpdocs directory to your .gitignore file
+    - Add Editor-specific files to your .gitignore ( .swp for Vim, .idea for PHPStorm, etc. )
+* Select an [Open Source License](http://opensource.org/licenses) and copy it to LICENSE.txt
+* Update [CONTRIBUTING.md](docs/CONTRIBUTING.md) to match your project needs
 
 
 
