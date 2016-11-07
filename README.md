@@ -7,6 +7,12 @@ and prevent you from forgetting the finer yet important details of creating and
 maintaining a software project. 
 
 
+## Directory Structure
+
+* **docs** - Project documentation written by and for humans about your project
+* **src** - the source code of your application
+
+
 
 ## Installation
 
