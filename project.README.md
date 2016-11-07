@@ -37,7 +37,7 @@ get them interested.
 
 * [Semantic Versioning](http://semver.org)
 * [GitHub Markdown](https://help.github.com/categories/writing-on-github/)
-* [Contributing Guidelines](https://github.com/blog/1184-contributing-guidelines)
+* [Contributing Guidelines](https://help.github.com/articles/setting-guidelines-for-repository-contributors/)
 * [Changelog](docs/CHANGELOG.md)
 * [Humans TXT](http://humanstxt.org/) 
 * [Robots TXT](http://www.robotstxt.org/) 
