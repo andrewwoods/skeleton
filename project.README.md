@@ -12,6 +12,12 @@ get them interested.
 
 
 
+## Version
+
+The current version is 0.2.0. This project uses [semantic versioning](http://semver.org).
+
+
+
 ## Ideas for sections/pages
 
 * Features
