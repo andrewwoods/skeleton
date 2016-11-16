@@ -1,7 +1,0 @@
-#!/bin/bash
-
-echo "Generating PHP documentation from 'src' directory"
-echo "-------------------------------------------------"
-
-phpdoc -d ./src -t ./phpdocs  --title "My Project Name"
-
