@@ -18,6 +18,12 @@ config.php
 
 
 #
+# Generated content
+#
+phpdocs
+
+
+#
 # Packaged files
 #
 *.7z
