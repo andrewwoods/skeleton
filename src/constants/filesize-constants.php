@@ -2,7 +2,7 @@
 /**
  * File Size Constants
  *
- * @package Core
+ * @package Constants\Computers
  */
 
 

@@ -2,7 +2,7 @@
 /**
  * Your Application Constants
  *
- * @package Core
+ * @package Application
  */
 
 

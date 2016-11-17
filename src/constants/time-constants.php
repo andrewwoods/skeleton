@@ -2,7 +2,7 @@
 /**
  * Time Constants
  *
- * @package Core
+ * @package Constants\Time
  */
 
 
