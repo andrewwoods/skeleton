@@ -7,6 +7,7 @@
 #
 # Configuration files
 #
+*.env
 config.php
 
 
@@ -21,6 +22,7 @@ config.php
 # Generated content
 #
 phpdocs
+vendor
 
 
 #
@@ -57,6 +59,7 @@ phpinfo.php
 # OS X specific files
 #
 .DS_Store
+.Trashes
 
 
 #
