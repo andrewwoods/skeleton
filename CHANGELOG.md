@@ -6,12 +6,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.3.0 - 2017-05-26
+
+### Added
+
+* Added Application constants file
+* Added Date constants file 
+* Added File Size constants file 
+* Added Powers of Two constants file 
+* Added Time constants file 
+
 
 ## 0.2.0 - 2016-11-16
 
 ### Added
 
-- Ability to generate PHPdoc (you'll need to install
+- Ability to generate PHPdoc 
 
   * You'll need to [install phpDocumentor](https://phpdoc.org/)
 
