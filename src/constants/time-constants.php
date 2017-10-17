@@ -33,6 +33,11 @@ define('MONTH_IN_DAYS', 30);
  */
 define('YEAR_IN_DAYS', 365);
 
+/**
+ * The number of days in leap year
+ */
+define('LEAP_YEAR_IN_DAYS', 366);
+
 
 /**
  * The number of seconds for 1 minute
@@ -64,5 +69,9 @@ define('MONTH_IN_SECONDS', MONTH_IN_DAYS * DAY_IN_SECONDS);
  */
 define('YEAR_IN_SECONDS', YEAR_IN_DAYS * DAY_IN_SECONDS);
 
+/**
+ * The number of seconds for leap year (366 days)
+ */
+define('LEAP_YEAR_IN_SECONDS', LEAP_YEAR_IN_DAYS * DAY_IN_SECONDS);
 
 
