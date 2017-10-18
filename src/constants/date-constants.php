@@ -37,7 +37,7 @@ define('DATE_US_MEDIUM_FORMAT', 'F j, Y');
 /**
  * Long USA-style date - Weekday, Month Date, Year
  *
- * e.g. for November 3, 2016 for 2016-11-03
+ * e.g. Thursday, November 3rd, 2016 for 2016-11-03
  */
 define('DATE_US_LONG_FORMAT', 'l, F jS, Y');
 
