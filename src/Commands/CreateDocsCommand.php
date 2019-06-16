@@ -26,14 +26,20 @@ class CreateDocsCommand extends Command
      */
     protected $description = 'Create documentation for your project';
 
+    protected $skeletonPath = '';
+
     /**
      * Create a new command instance.
      *
+     * @param string $path the directory of the skeleton project
+     *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $path)
     {
         parent::__construct();
+
+        $this->skeletonPath = $path;
     }
 
 
