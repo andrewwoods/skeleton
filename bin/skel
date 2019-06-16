@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+require  dirname(__FILE__, 2) . '/vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+
+use Skel\Commands\CreateDocsCommand;
+
+$application = new Application('Skeleton', '0.1.0');
+
+//
+// Register your commands
+//
+$application->add(new CreateDocsCommand());
+
+$application->run();
+

@@ -1,0 +1,13 @@
+{
+    "name": "awoods/skel",
+    "description": "file generator for Skeleton",
+    "require": {
+        "symfony/console": "^4.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Skel\\": "src/"
+        }
+    }
+
+}
