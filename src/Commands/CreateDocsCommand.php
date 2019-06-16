@@ -28,6 +28,8 @@ class CreateDocsCommand extends Command
 
     protected $skeletonPath = '';
 
+    protected $userProjectPath = '';
+
     /**
      * Create a new command instance.
      *
@@ -35,11 +37,12 @@ class CreateDocsCommand extends Command
      *
      * @return void
      */
-    public function __construct(string $path)
+    public function __construct(string $path, string $userProjectPath)
     {
         parent::__construct();
 
         $this->skeletonPath = $path;
+        $this->userProjectPath = $userProjectPath;
     }
 
 

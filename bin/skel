@@ -8,13 +8,14 @@ use Symfony\Component\Console\Application;
 use Skel\Commands\CreateDocsCommand;
 
 $skeletonPath = dirname(__FILE__, 2);
+$userProjectPath = getcwd();
 
 $application = new Application('Skeleton', '0.1.0');
 
 //
 // Register your commands
 //
-$application->add(new CreateDocsCommand($skeletonPath));
+$application->add(new CreateDocsCommand($skeletonPath, $userProjectPath));
 
 $application->run();
 
