@@ -2,6 +2,7 @@
 
 namespace Skel\Commands;
 
+use Skel\Document;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -57,14 +58,33 @@ class CreateDocsCommand extends Command
         $opt['licenseType'] = $input->getOption('license') ?? false;
 
         $arg = [];
-        $arg['names'] = $input->getArgument('names') ?? 'mit';
+        $arg['names'] = $input->getArgument('names') ?? 'docs';
+        if ($arg['names'] === 'docs') {
+            $arg['names'] = ['readme', 'changelog', 'contributing'];
+        }
 
-        $output->writeln('Example Output');
-        $output->writeln('--------------');
-        print_r($opt);
-        $output->writeln('');
-        print_r($arg);
-        $output->writeln('');
+        $document = new Document();
+
+        foreach ($arg['names'] as $doc) {
+            if ($doc == "license" && isset($opt['licenseType'])) {
+                $doc .= '-' . $this->sanitizeLicenseName($opt['licenseType']);
+            }
+
+            $pathSource = $this->skeletonPath . '/'
+                . $document->getSourceFileName($doc);
+            $pathTo = $this->userProjectPath . '/'
+                . $document->getDestinationFileName($doc);
+
+            copy($pathSource, $pathTo);
+        }
+
+    }
+
+    protected function sanitizeLicenseName($license)
+    {
+        $license = strtolower($license);
+
+        return $license;
     }
 
     protected function configure()
