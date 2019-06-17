@@ -38,7 +38,7 @@ class Document
                 break;
 
             case "readme":
-                return 'README.md';
+                return 'project.README.md';
                 break;
 
             default:
