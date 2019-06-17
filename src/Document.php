@@ -23,8 +23,6 @@ class Document
     {
         $this->docTypes[] = 'changelog';
         $this->docTypes[] = 'contributing';
-        $this->docTypes[] = 'license-gpl-2.0';
-        $this->docTypes[] = 'license-mit';
         $this->docTypes[] = 'readme';
     }
 
@@ -36,11 +34,7 @@ class Document
                 break;
 
             case 'contributing':
-                return 'CONTRIBUTING.md';
-                break;
-
-            case 'license-mit':
-                return 'licenses/mit.txt';
+                return 'docs/CONTRIBUTING.md';
                 break;
 
             case "readme":
@@ -66,10 +60,6 @@ class Document
 
             case 'contributing':
                 return 'CONTRIBUTING.md';
-                break;
-
-            case 'license-mit':
-                return 'LICENSE';
                 break;
 
             case "readme":
