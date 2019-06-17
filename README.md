@@ -49,10 +49,27 @@ maintaining a software project.
 
 1. Download the latest ZIP file from [https://github.com/andrewwoods/skeleton](https://github.com/andrewwoods/skeleton)
 1. Expand the ZIP file
-1. Move project.README.md to README.md
+1. Add the 'bin' directory to your path
 1. Advanced features
     * Install [https://phpdoc.org](PHPDoc) to generate developer documenation from your comments
     * Install [https://phpunit.de](PHPUnit) to create and run tests to improve your code quality
+
+## Create a New Project Directory
+
+1. Create the top-level project directories you need
+1. Create Essential Project Docs
+
+    ```
+    $ skel docs readme contributing
+    ```
+
+1. Create a License for your project
+
+    ```
+    $ skel license mit
+    ```
+
+
 
 
 ## Table of Contents
