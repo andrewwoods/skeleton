@@ -13,6 +13,8 @@ class CreateDocsCommand extends Command
 {
     protected static $defaultName = 'docs';
 
+    protected static $defaultDoc = 'all';
+
 
     /**
      * The name and signature of the console command.
@@ -58,13 +60,12 @@ class CreateDocsCommand extends Command
         $opt['licenseType'] = $input->getOption('license') ?? false;
 
         $arg = [];
-        $arg['names'] = $input->getArgument('names') ?? 'docs';
-        if ($arg['names'] === 'docs') {
+        $arg['names'] = $input->getArgument('names') ?? self::$defaultDoc;
+        if ( count($arg['names']) === 0 || $arg['names'][0] === self::$defaultDoc ) {
             $arg['names'] = ['readme', 'changelog', 'contributing'];
         }
 
         $document = new Document();
-
         foreach ($arg['names'] as $doc) {
             if ($doc == "license" && isset($opt['licenseType'])) {
                 $doc .= '-' . $this->sanitizeLicenseName($opt['licenseType']);
@@ -101,7 +102,7 @@ class CreateDocsCommand extends Command
             )
             ->addArgument(
                 'names',
-                InputArgument::IS_ARRAY | InputArgument::REQUIRED,
+                InputArgument::IS_ARRAY | InputArgument::OPTIONAL,
                 'Who do you want to greet (separate multiple names with a space)?'
             );
     }
