@@ -15,6 +15,8 @@ class CreateDocsCommand extends Command
 
     protected static $defaultDoc = 'all';
 
+    protected static $defaultLicense = 'mit';
+
 
     /**
      * The name and signature of the console command.
@@ -102,7 +104,7 @@ class CreateDocsCommand extends Command
                 'l',
                 InputOption::VALUE_REQUIRED,
                 'type of software license',
-                'mit'
+                self::$defaultLicense
             )
             ->addArgument(
                 'names',
