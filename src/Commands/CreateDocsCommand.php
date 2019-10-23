@@ -90,6 +90,10 @@ class CreateDocsCommand extends Command
 
     protected function configure()
     {
+        $helpNames = 'specify the file name. choose from: ' .
+                     'readme, changelog, contributing. ' .
+                     self::$defaultDoc . ' is the default.';
+
         $this
             ->setDescription('Creates project docs.')
             ->setHelp('Generate boilerplate documentation for your project')
@@ -103,7 +107,7 @@ class CreateDocsCommand extends Command
             ->addArgument(
                 'names',
                 InputArgument::IS_ARRAY | InputArgument::OPTIONAL,
-                'Who do you want to greet (separate multiple names with a space)?'
+                $helpNames
             );
     }
 
