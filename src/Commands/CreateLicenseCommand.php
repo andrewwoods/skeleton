@@ -68,8 +68,9 @@ class CreateLicenseCommand extends Command
             ->setHelp('Generate a license for your project')
             ->addArgument(
                 'name',
-                InputArgument::REQUIRED,
-                'Which license do you want?'
+                InputArgument::OPTIONAL,
+                'Which license do you want?',
+                'mit'
             );
     }
 
