@@ -4,12 +4,15 @@
 require  dirname(__FILE__, 2) . '/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Helper\FormatterHelper;
 
 use Skel\Commands\CreateDocsCommand;
 use Skel\Commands\CreateLicenseCommand;
 
 $skeletonPath = dirname(__FILE__, 2);
 $userProjectPath = getcwd();
+
+try {
 
 $application = new Application('Skeleton', '0.2.0');
 
@@ -21,3 +24,12 @@ $application->add(new CreateLicenseCommand($skeletonPath, $userProjectPath));
 
 $application->run();
 
+} catch (Exception $exception) {
+    $messages = ['Error'];
+    $messages[] = $exception->getMessage();
+
+    $format = new FormatterHelper();
+    $formatted = $format->formatBlock($messages, 'error');
+
+    echo $formatted . "\n";
+}
