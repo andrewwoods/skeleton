@@ -13,6 +13,8 @@ class CreateLicenseCommand extends Command
 {
     protected static $defaultName = 'license';
 
+    protected static $defaultLicense = 'mit';
+
     /**
      * The console command description.
      *
@@ -48,7 +50,7 @@ class CreateLicenseCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $arg = [];
-        $arg['name'] = $input->getArgument('name') ?? 'mit';
+        $arg['name'] = $input->getArgument('name') ?? self::$defaultLicense;
 
         $license = new License();
 
@@ -70,7 +72,7 @@ class CreateLicenseCommand extends Command
                 'name',
                 InputArgument::OPTIONAL,
                 'Which license do you want?',
-                'mit'
+                self::$defaultLicense
             );
     }
 
