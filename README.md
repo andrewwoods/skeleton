@@ -69,7 +69,16 @@ maintaining a software project.
     $ skel license mit
     ```
 
+## Ideas
 
+* `skel php` for PHP-related files
+
+    - composer ( autoloading )
+    - docker
+    - symfony console application
+    - symfony console command
+
+* `skel js` for JS-related files
 
 
 ## Table of Contents
