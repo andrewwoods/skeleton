@@ -15,6 +15,8 @@ class CreateLicenseCommand extends Command
 
     protected static $defaultLicense = 'mit';
 
+    protected $licenses = ['mit', 'gpl-2'];
+
     /**
      * The console command description.
      *
@@ -65,6 +67,8 @@ class CreateLicenseCommand extends Command
 
     protected function configure()
     {
+        $nameHelp = 'Pick your license. Choose from: '
+            . implode(', ', $this->licenses);
         $this
             ->setDescription('Creates project license.')
             ->setHelp('Generate a license for your project')

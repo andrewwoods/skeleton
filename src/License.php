@@ -21,7 +21,7 @@ class License
 
     public function __construct()
     {
-        $this->types[] = 'gpl-2.0';
+        $this->types[] = 'gpl-2';
         $this->types[] = 'mit';
     }
 
@@ -29,7 +29,7 @@ class License
     {
         switch ($doc){
 
-            case 'gpl-2.0':
+            case 'gpl-2':
                 return 'licenses/gpl-2.0.txt';
                 break;
 
