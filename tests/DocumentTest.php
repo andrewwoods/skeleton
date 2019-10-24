@@ -15,9 +15,6 @@ class DocumentTest extends TestCase
         $result = $document->getSourceFileName('contributing');
         $this->assertEquals('CONTRIBUTING.md', $result);
 
-        $result = $document->getSourceFileName('license-mit');
-        $this->assertEquals('licenses/mit.txt', $result);
-
         $result = $document->getSourceFileName('readme');
         $this->assertEquals('README.md', $result);
     }
