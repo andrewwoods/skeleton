@@ -13,10 +13,10 @@ class DocumentTest extends TestCase
         $this->assertEquals('CHANGELOG.md', $result);
 
         $result = $document->getSourceFileName('contributing');
-        $this->assertEquals('CONTRIBUTING.md', $result);
+        $this->assertEquals('docs/CONTRIBUTING.md', $result);
 
         $result = $document->getSourceFileName('readme');
-        $this->assertEquals('README.md', $result);
+        $this->assertEquals('project.README.md', $result);
     }
 
     public function testGetSourceFilenameWithUnknownId()
