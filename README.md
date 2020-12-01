@@ -9,6 +9,17 @@ maintaining a software project.
 
 ## Directory Structure
 
+When you manage a software project, one important but often overlooked aspect,
+is creating a solid directory structure. Below are some preferred directory names.
+They're meant to be opt-in. If your project doesn't need a particular directory,
+then don't include it. However, if you do need it to manage a particular type of
+content, these names are the most common. Using them will help people new to your
+project.
+
+**There isn't a `skel` command for creating a directory structure.** The various
+types of potential projects, are too varied to create a command that would satisfy
+a wide array of users.
+
 ### Core Directories
 
 * **docs** - Project documentation written by and for humans about your project
