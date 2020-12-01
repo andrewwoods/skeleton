@@ -23,6 +23,7 @@ class Document
     {
         $this->docTypes[] = 'changelog';
         $this->docTypes[] = 'contributing';
+        $this->docTypes[] = 'humans';
         $this->docTypes[] = 'readme';
     }
 
@@ -35,6 +36,10 @@ class Document
 
             case 'contributing':
                 return 'docs/CONTRIBUTING.md';
+                break;
+
+            case 'humans':
+                return 'docs/humans.txt';
                 break;
 
             case "readme":
@@ -60,6 +65,10 @@ class Document
 
             case 'contributing':
                 return 'CONTRIBUTING.md';
+                break;
+
+            case 'humans':
+                return 'humans.txt';
                 break;
 
             case "readme":

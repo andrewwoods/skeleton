@@ -58,7 +58,7 @@ class CreateDocsCommand extends Command
         $arg = [];
         $arg['names'] = $input->getArgument('names') ?? self::$defaultDoc;
         if ( count($arg['names']) === 0 || $arg['names'][0] === self::$defaultDoc ) {
-            $arg['names'] = ['readme', 'changelog', 'contributing'];
+            $arg['names'] = ['readme', 'changelog', 'contributing', 'humans'];
         }
 
         $document = new Document();
@@ -77,7 +77,7 @@ class CreateDocsCommand extends Command
     protected function configure()
     {
         $helpNames = 'specify the file name. choose from: ' .
-                     'readme, changelog, contributing. ' .
+                     'readme, changelog, contributing, and humans. ' .
                      self::$defaultDoc . ' is the default.';
 
         $this
