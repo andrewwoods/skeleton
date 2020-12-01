@@ -1,38 +1,29 @@
 
-#-----------------------------------------------------------------------
-#
-#	TEAM
-#
+/* TEAM */
 
-Your title: Your name.
-Site: email, link to a contact form, etc.
-Twitter: your Twitter username.
+Your title: Your name
+Site: https://example.com
+Twitter: @username
 Location: City, Country.
 
 	[...]
 
 
-#-----------------------------------------------------------------------
-#
-#	SITE
-#
+/* SITE */
 
 Last update: YYYY-MM-DD 
-Standards: HTML5, CSS3,..
+Standards: HTML5, CSS3, ...
 Components: Modernizr, jQuery, etc.
 Software: Software used for the development
-
-
-
-
-#-----------------------------------------------------------------------
-#
-#	THANKS
-#
-
-Name: name or url
 
 	[...]
 
 
+/* THANKS */
 
+Name: Firstname Lastname
+Site: https://example.com
+Location: City, Country.
+Contribution: translation, accessibility consulting
+
+	[...]
