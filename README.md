@@ -33,8 +33,8 @@ a wide array of users.
 ### Optional Directories
 
 * **build** - this is for the creation of generated files.
-* **config** - for files the are used for configuration, that are not environment specific
-* **public_html** - only needed for web projects. Represents the root of the website.
+* **config** - for files that are used for configuration, that are not environment specific
+* **public** - only needed for web projects. Represents the root of the website.
 	* **css**
 	* **fonts**
 	* **js**
