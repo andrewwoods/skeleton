@@ -28,6 +28,10 @@ a wide array of users.
 * **tests** - the tests that exercise and verify the code of your application
 * **bin** - commands you want to run.
 * **log** - capture information about what happens while your application runs 
+
+### Package Manager Directories
+
+* **node_modules** - this is managed by NPM
 * **vendor** - this is managed by Composer
 
 ### Optional Directories
