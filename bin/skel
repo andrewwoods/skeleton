@@ -9,13 +9,16 @@ use Symfony\Component\Console\Helper\FormatterHelper;
 use Skel\Commands\CreateDocsCommand;
 use Skel\Commands\CreateLicenseCommand;
 use Skel\Commands\CreateGitCommand;
+use Skel\Commands\WriteCommand;
 
 $skeletonPath = dirname(__FILE__, 2);
 $userProjectPath = getcwd();
+$homeDir = getenv('HOME');
+$templatePath = "{$homeDir}/dotfiles/templates"; 
 
 try {
 
-$application = new Application('Skeleton', '0.2.0');
+$application = new Application('Skeleton', '0.3.0');
 
 //
 // Register your commands
@@ -23,6 +26,10 @@ $application = new Application('Skeleton', '0.2.0');
 $application->add(new CreateDocsCommand($skeletonPath, $userProjectPath));
 $application->add(new CreateLicenseCommand($skeletonPath, $userProjectPath));
 $application->add(new CreateGitCommand($skeletonPath, $userProjectPath));
+
+$write = new WriteCommand($skeletonPath, $userProjectPath);
+$write->setTemplatePath($templatePath);
+$application->add($write);
 
 $application->run();
 
