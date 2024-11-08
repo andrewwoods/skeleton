@@ -5,22 +5,28 @@ __The tagline for your project__
 
 This is where you write a paragraph or so, describing your project to the
 person reading it, so they know what your project is all about. You could skip
-this part.  However, after all the hard work you put into creating your
+this part. However, after all the hard work you put into creating your
 project, it would be a shame if nobody ever used it, because you didn't take
-the time to explain it to them.  You don't have to write a lot - just enough to
+the time to explain it to them. You don't have to write a lot - just enough to
 get them interested.
 
 
 
 ## Version
 
-The current version is 0.2.0. This project uses [semantic versioning](http://semver.org).
+The current version is 0.0.0. This project uses [semantic versioning](http://semver.org).
+
+
+## Features
+
+* First feature
+* Second feature
+* Third feature
 
 
 
 ## Ideas for sections/pages
 
-* Features
 * Language Translations 
 * Frequently Asked Questions (FAQ)
 * Screenshots
@@ -54,7 +60,5 @@ The current version is 0.2.0. This project uses [semantic versioning](http://sem
 
 ## Credits and Acknowledgments
 
-* Project Creator:  [Firstname Lastname](http://example.com)
-* Current Maintainer: [Firstname Lastname](http://example.com)
-
-
+* Project Creator:  [Firstname Lastname](https://example.com)
+* Current Maintainer: [Firstname Lastname](https://example.com)
