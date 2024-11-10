@@ -3,12 +3,19 @@
 namespace Skel\Commands;
 
 use Skel\License;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'license',
+    description: 'Creates a new user.',
+    hidden: false,
+    aliases: ['app:add-user']
+)]
 class CreateLicenseCommand extends Command
 {
     protected static $defaultName = 'license';
@@ -49,7 +56,7 @@ class CreateLicenseCommand extends Command
      *
      * @return mixed
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $arg = [];
         $arg['name'] = $input->getArgument('name') ?? self::$defaultLicense;

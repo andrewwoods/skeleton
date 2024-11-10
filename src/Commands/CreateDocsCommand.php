@@ -3,11 +3,18 @@
 namespace Skel\Commands;
 
 use Skel\Document;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'docs',
+    description: 'Creates a new user.',
+    hidden: false,
+    aliases: ['app:add-user']
+)]
 class CreateDocsCommand extends Command
 {
     protected static $defaultName = 'docs';
@@ -53,7 +60,7 @@ class CreateDocsCommand extends Command
      *
      * @return mixed
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $arg = [];
         $arg['names'] = $input->getArgument('names') ?? self::$defaultDoc;
@@ -72,6 +79,7 @@ class CreateDocsCommand extends Command
             copy($pathSource, $pathTo);
         }
 
+        return Command::SUCCESS;
     }
 
     protected function configure()

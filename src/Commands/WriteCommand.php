@@ -3,26 +3,25 @@
 namespace Skel\Commands;
 
 use Skel\Document;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(
+    name: 'write',
+    description: 'Write a document for publishing from a template',
+    hidden: false
+)]
 class WriteCommand extends Command
 {
     protected static $defaultName = 'write';
 
     protected static $defaultType = 'article';
-
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Write a document for publishing based on a template';
 
     protected $skeletonPath = '';
 
@@ -52,7 +51,7 @@ class WriteCommand extends Command
      *
      * @return mixed
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $option = [];
         $option['type'] = $input->getOption('type') ?? 'article';
@@ -93,7 +92,6 @@ class WriteCommand extends Command
                      'article, daily, or weekly?';
 
         $this
-            ->setDescription('Create a file for writing.')
             ->setHelp('Prepare a file to write from a template.')
             ->addOption(
                 'type',

@@ -3,11 +3,18 @@
 namespace Skel\Commands;
 
 use Skel\Git;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'git',
+    description: 'Creates a git file',
+    hidden: false,
+    aliases: ['app:add-user']
+)]
 class CreateGitCommand extends Command
 {
     protected static $defaultName = 'git';
@@ -51,7 +58,7 @@ class CreateGitCommand extends Command
      *
      * @return mixed
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $arg = [];
         $arg['names'] = $input->getArgument('names');

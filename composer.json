@@ -1,8 +1,14 @@
 {
     "name": "awoods/skel",
     "description": "file generator for Skeleton",
+        "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/andrewwoods/chicago-style"
+        }
+    ],
     "require": {
-        "symfony/console": "^4.3"
+        "symfony/console": "^7.1"
     },
     "autoload": {
         "psr-4": {
