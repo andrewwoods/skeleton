@@ -97,16 +97,38 @@ class WriteCommand extends Command
         ]);
 
         $formatOpalDate = 'Y M d D';
+        $formatOpalDateTime = 'Y M d D H:i';
         $dayInSeconds = 86_400;
+        $dateYear = date('Y'); 
+        $dateIsoDate = date('Y-m-d'); 
+        $dateIsoDateTime = date('Y-m-dTH:i'); 
+        $dateIsoTimeStamp = date('Y-m-dTH:i:sP'); 
         $dateToday = date($formatOpalDate);
         $dateDue = date($formatOpalDate, \time() + (7 * $dayInSeconds));
+        $nowDate = date($formatOpalDate);
+        $nowDateTime = date($formatOpalDateTime);
 
-        echo $twig->render('article.md', [
-            'title' => $content->titleCase($documentTitle),
-            'language' => "en-US",
-            'date_created' =>  $dateToday,
-            'date_due' =>  $dateDue,
-        ]);
+        $fh = fopen($pathTo, 'a');
+        if (! $fh) {
+            echo "Sorry, but the file '{$pathTo}' cannot be wriiten";
+            exit(1);
+        }
+
+        $templateFile = $this->getSourceFileName($option['type']);
+        fwrite(
+            $fh,  
+            $twig->render($templateFile, [
+                'title' => $content->titleCase($documentTitle),
+                'language' => "en-US",
+                'iso_date' => $dateIsoDate,
+                'iso_datetime' => $dateIsoDateTime,
+                'iso_timestamp' => $dateIsoTimeStamp,
+                'date_created' =>  $dateToday,
+                'date_due' =>  $dateDue,
+                'now_date' =>  $nowDate,
+                'now_datetime' =>  $nowDateTime,
+            ])
+        );
 
         return Command::SUCCESS;
 
@@ -155,11 +177,15 @@ class WriteCommand extends Command
     
     protected function getSourceFileName($doc)
     {
-        $allowedTypes = ['article'];
+        $allowedTypes = ['article', 'project'];
 
         switch ($doc){
             case 'article':
                 return 'article.md';
+                break;
+
+            case 'project':
+                return 'project.md';
                 break;
 
             default:
