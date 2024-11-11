@@ -30,6 +30,11 @@ class WriteCommand extends Command
     protected $templatePath = '';
 
 
+    /*==========================================================================
+     *   Magic Functions
+     *==========================================================================
+     */
+
     /**
      * Create a new command instance.
      *
@@ -45,6 +50,10 @@ class WriteCommand extends Command
         $this->userProjectPath = $userProjectPath;
     }
 
+    /*==========================================================================
+     *   Public Functions
+     *==========================================================================
+     */
 
     /**
      * Execute the console command.
@@ -53,8 +62,11 @@ class WriteCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        $defaultTitle = '';
+
         $option = [];
         $option['type'] = $input->getOption('type') ?? 'article';
+        $option['title'] = $input->getOption('title') ?? $defaultTitle;
 
         $arg = [];
         $arg['filename'] = $input->getArgument('filename') ?? null;
@@ -68,13 +80,34 @@ class WriteCommand extends Command
             . '/' . $arg['filename'];
 
         $io = new SymfonyStyle($input, $output);
-        $io->title('Source Path');
-        $output->writeln($pathSource);
 
-        $io->title('Destination Path');
-        $output->writeln($pathTo);
+        $documentTitle = $option['title'];
+        if ($option['title'] === $defaultTitle) { 
+            $helper = $this->getHelper('question');
+            $question = new Question('What is your document title? ');
 
-        copy($pathSource, $pathTo);
+            $documentTitle = $helper->ask($input, $output, $question);
+        }
+
+        $loader = new \Twig\Loader\FilesystemLoader($this->getTemplatePath());
+        $twig = new \Twig\Environment($loader, [
+            'debug' => true,
+        ]);
+
+        $formatOpalDate = 'Y M d D';
+        $dayInSeconds = 86_400;
+        $dateToday = date($formatOpalDate);
+        $dateDue = date($formatOpalDate, \time() + (7 * $dayInSeconds));
+
+        echo $twig->render('article.md', [
+            'title' => $documentTitle,
+            'language' => "en-US",
+            'date_created' =>  $dateToday,
+            'date_due' =>  $dateDue,
+        ]);
+
+        return Command::SUCCESS;
+
     }
 
     public function setTemplatePath($path){
@@ -85,20 +118,31 @@ class WriteCommand extends Command
         return $this->templatePath;
     }
 
+    /*==========================================================================
+     *   Protected Functions
+     *==========================================================================
+     */
     protected function configure()
     {
         $helpFilename = 'Specify the file name';
         $helpType = 'Which type of file are you creating:' . "\n" .
                      'article, daily, or weekly?';
+        $helpTitle = 'The title of your Document' . "\n"; 
 
         $this
-            ->setHelp('Prepare a file to write from a template.')
+            ->setHelp('Write a document for publishing from a template.')
             ->addOption(
                 'type',
                 null,
                 InputOption::VALUE_REQUIRED,
                 $helpType,
                 'article'
+            )
+            ->addOption(
+                'title',
+                null,
+                InputOption::VALUE_REQUIRED,
+                $helpType
             )
             ->addArgument(
                 'filename',
