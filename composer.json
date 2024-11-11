@@ -9,6 +9,7 @@
     ],
     "require": {
         "symfony/console": "^7.1",
+        "andrewwoods/chicago-style": "^0.1.0",
         "twig/twig": "^3.0"
     },
     "autoload": {

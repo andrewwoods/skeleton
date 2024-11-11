@@ -2,6 +2,7 @@
 
 namespace Skel\Commands;
 
+use AndrewWoods\ChicagoStyle\Content;
 use Skel\Document;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -89,6 +90,7 @@ class WriteCommand extends Command
             $documentTitle = $helper->ask($input, $output, $question);
         }
 
+        $content = new Content();
         $loader = new \Twig\Loader\FilesystemLoader($this->getTemplatePath());
         $twig = new \Twig\Environment($loader, [
             'debug' => true,
@@ -100,7 +102,7 @@ class WriteCommand extends Command
         $dateDue = date($formatOpalDate, \time() + (7 * $dayInSeconds));
 
         echo $twig->render('article.md', [
-            'title' => $documentTitle,
+            'title' => $content->titleCase($documentTitle),
             'language' => "en-US",
             'date_created' =>  $dateToday,
             'date_due' =>  $dateDue,
