@@ -139,7 +139,7 @@ class WriteCommand extends Command
         $nowDate = date($formatOpalDate);
         $nowDateTime = date($formatOpalDateTime);
 
-        $fh = fopen($pathTo, 'a');
+        $fh = fopen($pathTo, 'w');
         if (! $fh) {
             echo "Sorry, but the file '{$pathTo}' cannot be wriiten";
             exit(1);
