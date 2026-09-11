@@ -141,7 +141,7 @@ class WriteCommand extends Command
 
         $fh = fopen($pathTo, 'w');
         if (! $fh) {
-            echo "Sorry, but the file '{$pathTo}' cannot be wriiten";
+            echo "Sorry, but the file '{$pathTo}' cannot be written";
             exit(1);
         }
 
