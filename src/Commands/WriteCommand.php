@@ -64,10 +64,14 @@ class WriteCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $defaultTitle = '';
+        $defaultPerson = '';
+        $defaultAddress = '';
 
         $option = [];
         $option['type'] = $input->getOption('type') ?? 'article';
         $option['title'] = $input->getOption('title') ?? $defaultTitle;
+        $option['person'] = $input->getOption('person') ?? $defaultPerson;
+        $option['address'] = $input->getOption('address') ?? $defaultAddress;
 
         $arg = [];
         $arg['filename'] = $input->getArgument('filename') ?? null;
@@ -83,11 +87,38 @@ class WriteCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $documentTitle = $option['title'];
-        if ($option['title'] === $defaultTitle) { 
-            $helper = $this->getHelper('question');
-            $question = new Question('What is your document title? ');
+        $person = $option['person'];
+        $address = $option['address'];
+        if ($option['type'] === 'email') {
+            if ($option['title'] === $defaultTitle) {
+                $helper = $this->getHelper('question');
+                $question = new Question('What is your email subject? ');
 
-            $documentTitle = $helper->ask($input, $output, $question);
+                $documentTitle = $helper->ask($input, $output, $question);
+            }
+
+            if ($option['address'] === $defaultAddress) {
+                $helper = $this->getHelper('question');
+                $question = new Question('What is their email address? ');
+
+                $address = $helper->ask($input, $output, $question);
+            }
+
+            if ($option['person'] === $defaultPerson) {
+                $helper = $this->getHelper('question');
+                $question = new Question('Who is your email for? ');
+
+                $person = $helper->ask($input, $output, $question);
+            }
+
+        } else {
+
+            if ($option['title'] === $defaultTitle) {
+                $helper = $this->getHelper('question');
+                $question = new Question('What is your document title? ');
+
+                $documentTitle = $helper->ask($input, $output, $question);
+            }
         }
 
         $content = new Content();
@@ -119,6 +150,8 @@ class WriteCommand extends Command
             $fh,  
             $twig->render($templateFile, [
                 'title' => $content->titleCase($documentTitle),
+                'person' => $person,
+                'address' => $address,
                 'language' => "en-US",
                 'iso_date' => $dateIsoDate,
                 'iso_datetime' => $dateIsoDateTime,
@@ -163,7 +196,19 @@ class WriteCommand extends Command
                 'article'
             )
             ->addOption(
+                'person',
+                null,
+                InputOption::VALUE_REQUIRED,
+                $helpType
+            )
+            ->addOption(
                 'title',
+                null,
+                InputOption::VALUE_REQUIRED,
+                $helpType
+            )
+            ->addOption(
+                'address',
                 null,
                 InputOption::VALUE_REQUIRED,
                 $helpType
@@ -177,11 +222,15 @@ class WriteCommand extends Command
     
     protected function getSourceFileName($doc)
     {
-        $allowedTypes = ['article', 'project'];
+        $allowedTypes = ['article', 'email', 'project'];
 
         switch ($doc){
             case 'article':
                 return 'article.md';
+
+        case 'email':
+            return 'email.txt';
+                break;
                 break;
 
             case 'project':
