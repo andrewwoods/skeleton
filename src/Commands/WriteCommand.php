@@ -138,7 +138,7 @@ class WriteCommand extends Command
         $dateIsoDateTime = date('Y-m-dTH:i');
         $dateIsoTimeStamp = date('Y-m-dTH:i:sP');
         $dateToday = date($formatOpalDate);
-        $dateDue = date($formatOpalDate, \time() + (7 * $dayInSeconds));
+        $dateDue = date($formatOpalDate, \time() + (10 * $dayInSeconds));
         $nowDate = date($formatOpalDate);
         $nowDateTime = date($formatOpalDateTime);
 
@@ -228,7 +228,7 @@ class WriteCommand extends Command
 
     protected function getSourceFileName($doc)
     {
-        $allowedTypes = ['article', 'email', 'project'];
+        $allowedTypes = ['article', 'email', 'project', 'talk'];
 
         switch ($doc){
         case 'article':
@@ -241,6 +241,10 @@ class WriteCommand extends Command
 
         case 'project':
             return 'project.md';
+                break;
+
+        case 'talk':
+            return 'talk.md';
                 break;
 
         default:
