@@ -14,7 +14,7 @@ use Skel\Commands\WriteCommand;
 $skeletonPath = dirname(__FILE__, 2);
 $userProjectPath = getcwd();
 $homeDir = getenv('HOME');
-$templatePath = "{$homeDir}/dotfiles/templates"; 
+$templatePath = "{$homeDir}/dotfiles/templates";
 
 try {
 

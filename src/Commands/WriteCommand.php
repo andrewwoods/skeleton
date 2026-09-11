@@ -80,8 +80,8 @@ class WriteCommand extends Command
 
         $pathSource = $this->getTemplatePath()
             . '/' . $this->getSourceFileName($option['type']);
-        
-        $pathTo = $this->userProjectPath 
+
+        $pathTo = $this->userProjectPath
             . '/' . $arg['filename'];
 
         $io = new SymfonyStyle($input, $output);
@@ -123,17 +123,19 @@ class WriteCommand extends Command
 
         $content = new Content();
         $loader = new \Twig\Loader\FilesystemLoader($this->getTemplatePath());
-        $twig = new \Twig\Environment($loader, [
+        $twig = new \Twig\Environment(
+            $loader, [
             'debug' => true,
-        ]);
+            ]
+        );
 
         $formatOpalDate = 'Y M d D';
         $formatOpalDateTime = 'Y M d D H:i';
         $dayInSeconds = 86_400;
-        $dateYear = date('Y'); 
-        $dateIsoDate = date('Y-m-d'); 
-        $dateIsoDateTime = date('Y-m-dTH:i'); 
-        $dateIsoTimeStamp = date('Y-m-dTH:i:sP'); 
+        $dateYear = date('Y');
+        $dateIsoDate = date('Y-m-d');
+        $dateIsoDateTime = date('Y-m-dTH:i');
+        $dateIsoTimeStamp = date('Y-m-dTH:i:sP');
         $dateToday = date($formatOpalDate);
         $dateDue = date($formatOpalDate, \time() + (7 * $dayInSeconds));
         $nowDate = date($formatOpalDate);
@@ -144,11 +146,11 @@ class WriteCommand extends Command
             echo "Sorry, but the file '{$pathTo}' cannot be written";
             exit(1);
         }
-
         $templateFile = $this->getSourceFileName($option['type']);
         fwrite(
-            $fh,  
-            $twig->render($templateFile, [
+            $fh,
+            $twig->render(
+                $templateFile, [
                 'title' => $content->titleCase($documentTitle),
                 'person' => $person,
                 'address' => $address,
@@ -160,18 +162,21 @@ class WriteCommand extends Command
                 'date_due' =>  $dateDue,
                 'now_date' =>  $nowDate,
                 'now_datetime' =>  $nowDateTime,
-            ])
+                ]
+            )
         );
 
         return Command::SUCCESS;
 
     }
 
-    public function setTemplatePath($path){
+    public function setTemplatePath($path)
+    {
         $this->templatePath = $path;
     }
 
-    public function getTemplatePath(){
+    public function getTemplatePath()
+    {
         return $this->templatePath;
     }
 
@@ -184,7 +189,7 @@ class WriteCommand extends Command
         $helpFilename = 'Specify the file name';
         $helpType = 'Which type of file are you creating:' . "\n" .
                      'article, daily, or weekly?';
-        $helpTitle = 'The title of your Document' . "\n"; 
+        $helpTitle = 'The title of your Document' . "\n";
 
         $this
             ->setHelp('Write a document for publishing from a template.')
@@ -219,30 +224,29 @@ class WriteCommand extends Command
                 $helpFilename
             );
     }
-    
+
     protected function getSourceFileName($doc)
     {
         $allowedTypes = ['article', 'email', 'project'];
 
         switch ($doc){
-            case 'article':
-                return 'article.md';
+        case 'article':
+            return 'article.md';
+                break;
 
         case 'email':
             return 'email.txt';
                 break;
+
+        case 'project':
+            return 'project.md';
                 break;
 
-            case 'project':
-                return 'project.md';
-                break;
-
-            default:
-                $message = 'You have used an unknown file type (' . $doc . '). '
-                   . 'Please use one of the following: '
-                   . implode(', ', $allowedTypes)
-                ;
-                throw new unexpectedvalueexception($message);
+        default:
+            $message = 'You have used an unknown file type (' . $doc . '). '
+               . 'Please use one of the following: '
+               . implode(', ', $allowedTypes);
+            throw new unexpectedvalueexception($message);
         }
     }
 

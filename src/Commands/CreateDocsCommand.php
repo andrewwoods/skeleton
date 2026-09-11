@@ -64,7 +64,7 @@ class CreateDocsCommand extends Command
     {
         $arg = [];
         $arg['names'] = $input->getArgument('names') ?? self::$defaultDoc;
-        if ( count($arg['names']) === 0 || $arg['names'][0] === self::$defaultDoc ) {
+        if (count($arg['names']) === 0 || $arg['names'][0] === self::$defaultDoc ) {
             $arg['names'] = ['readme', 'changelog', 'contributing', 'humans'];
         }
 

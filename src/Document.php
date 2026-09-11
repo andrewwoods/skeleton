@@ -5,7 +5,7 @@
  * @author Andrew Woods <andrew@andrewwoods.net>
  *
  * @copyright 2019 Andrew Woods
- * @license https://opensource.org/licenses/GPL-3.0 GNU General Public License version 3
+ * @license   https://opensource.org/licenses/GPL-3.0 GNU General Public License version 3
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -30,28 +30,27 @@ class Document
     public function getSourceFileName($doc)
     {
         switch ($doc){
-            case 'changelog':
-                return 'CHANGELOG.md';
+        case 'changelog':
+            return 'CHANGELOG.md';
                 break;
 
-            case 'contributing':
-                return 'docs/CONTRIBUTING.md';
+        case 'contributing':
+            return 'docs/CONTRIBUTING.md';
                 break;
 
-            case 'humans':
-                return 'docs/humans.txt';
+        case 'humans':
+            return 'docs/humans.txt';
                 break;
 
-            case "readme":
-                return 'project.README.md';
+        case "readme":
+            return 'project.README.md';
                 break;
 
-            default:
-                $message = 'You have used an unknown file type (' . $doc . '). '
-                   . 'Please use one of the following: '
-                   . implode(', ', $this->docTypes)
-                ;
-                throw new unexpectedvalueexception($message);
+        default:
+            $message = 'You have used an unknown file type (' . $doc . '). '
+               . 'Please use one of the following: '
+               . implode(', ', $this->docTypes);
+            throw new unexpectedvalueexception($message);
         }
     }
 
@@ -59,28 +58,27 @@ class Document
     public function getDestinationFileName($doc)
     {
         switch ($doc){
-            case 'changelog':
-                return 'CHANGELOG.md';
+        case 'changelog':
+            return 'CHANGELOG.md';
                 break;
 
-            case 'contributing':
-                return 'CONTRIBUTING.md';
+        case 'contributing':
+            return 'CONTRIBUTING.md';
                 break;
 
-            case 'humans':
-                return 'humans.txt';
+        case 'humans':
+            return 'humans.txt';
                 break;
 
-            case "readme":
-                return 'README.md';
+        case "readme":
+            return 'README.md';
                 break;
 
-            default:
-                $message = 'You have used an unknown file type. '
-                    . 'Please use one of the following: '
-                    . implode(', ', $this->docTypes)
-                ;
-                throw new UnexpectedValueException($message);
+        default:
+            $message = 'You have used an unknown file type. '
+                . 'Please use one of the following: '
+                . implode(', ', $this->docTypes);
+            throw new UnexpectedValueException($message);
 
         }
     }
