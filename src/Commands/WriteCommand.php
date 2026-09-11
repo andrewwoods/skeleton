@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use UnexpectedValueException;
 
 #[AsCommand(
     name: 'write',
@@ -246,7 +247,7 @@ class WriteCommand extends Command
             $message = 'You have used an unknown file type (' . $doc . '). '
                . 'Please use one of the following: '
                . implode(', ', $allowedTypes);
-            throw new unexpectedvalueexception($message);
+            throw new UnexpectedValueException($message);
         }
     }
 
