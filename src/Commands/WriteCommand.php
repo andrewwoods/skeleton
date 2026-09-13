@@ -115,7 +115,7 @@ class WriteCommand extends Command
 
         $fh = fopen($pathTo, 'w');
         if (! $fh) {
-            echo "Sorry, but the file '{$pathTo}' cannot be written";
+            $output->writeln("Sorry, but the file '{$pathTo}' cannot be written");
             exit(1);
         }
         $templateFile = $this->getSourceFileName($option['type']);
@@ -174,19 +174,7 @@ class WriteCommand extends Command
 
     protected function getSourceFileName($doc)
     {
-        $allowedTypes = ['article'];
-
-        switch ($doc){
-        case 'article':
-            return 'article.md';
-                break;
-
-        default:
-            $message = 'You have used an unknown file type (' . $doc . '). '
-               . 'Please use one of the following: '
-               . implode(', ', $allowedTypes);
-            throw new UnexpectedValueException($message);
-        }
+        return 'article.md';
     }
 
 }
