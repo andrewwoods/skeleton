@@ -15,15 +15,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use UnexpectedValueException;
 
 #[AsCommand(
-    name: 'write:article',
-    description: 'Write an article for a blog or magazine',
+    name: 'write:talk',
+    description: 'Write a talk abstract and outline',
     hidden: false
 )]
-class WriteCommand extends Command
+class WriteTalkCommand extends Command
 {
-    protected static $defaultName = 'write';
-
-    protected static $defaultType = 'article';
+    protected static $defaultName = 'write:talk';
 
     protected $skeletonPath = '';
 
@@ -66,35 +64,55 @@ class WriteCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $defaultTitle = '';
+        $defaultSubtitle = '';
+        $defaultDateDue = '';
 
         $option = [];
-        $option['type'] = 'article';
+        $option['type'] = 'talk';
         $option['title'] = $input->getOption('title') ?? $defaultTitle;
+        $option['subtitle'] = $input->getOption('subtitle') ?? $defaultSubtitle;
+        $option['date_due'] = $input->getOption('date_due') ?? $defaultDateDue;
 
         $arg = [];
         $arg['filename'] = $input->getArgument('filename') ?? null;
 
         $document = new Document();
 
-        $pathSource = $this->getTemplatePath()
-            . '/' . $this->getSourceFileName($option['type']);
+        $pathSource = $this->templatePath
+        . '/' . $this->getSourceFileName($option['type']);
 
         $pathTo = $this->userProjectPath
-            . '/' . $arg['filename'];
+        . '/' . $arg['filename'];
 
         $io = new SymfonyStyle($input, $output);
 
         $documentTitle = $option['title'];
-
+        $subtitle = $option['subtitle'];
+        $dateDue = $option['date_due'];
         if ($option['title'] === $defaultTitle) {
             $helper = $this->getHelper('question');
-            $question = new Question('What is your document title? ');
+            $question = new Question('What is the title of your presentation? ');
 
             $documentTitle = $helper->ask($input, $output, $question);
         }
 
+        if ($option['subtitle']) {
+            $helper = $this->getHelper('question');
+            $question = new Question('What is the subtitle? ');
+
+            $subtitle = $helper->ask($input, $output, $question);
+        }
+
+
+        if ($option['date_due'] === $defaultDateDue) {
+            $helper = $this->getHelper('question');
+            $question = new Question('What is the due date? ');
+
+            $dateDue = $helper->ask($input, $output, $question);
+        }
+
         $content = new Content();
-        $loader = new \Twig\Loader\FilesystemLoader($this->getTemplatePath());
+        $loader = new \Twig\Loader\FilesystemLoader($this->templatePath);
         $twig = new \Twig\Environment(
             $loader, [
             'debug' => true,
@@ -109,7 +127,7 @@ class WriteCommand extends Command
         $dateIsoDateTime = date('Y-m-dTH:i');
         $dateIsoTimeStamp = date('Y-m-dTH:i:sP');
         $dateToday = date($formatOpalDate);
-        $dateDue = date($formatOpalDate, \time() + (10 * $dayInSeconds));
+        $dateDue = $dateDue ?: date($formatOpalDate, \time() + (10 * $dayInSeconds));
         $nowDate = date($formatOpalDate);
         $nowDateTime = date($formatOpalDateTime);
 
@@ -124,6 +142,8 @@ class WriteCommand extends Command
             $twig->render(
                 $templateFile, [
                 'title' => $content->titleCase($documentTitle),
+                'subtitle' => $subtitle ?? '',
+                'dateDue' => $dateDue,
                 'language' => "en-US",
                 'iso_date' => $dateIsoDate,
                 'iso_datetime' => $dateIsoDateTime,
@@ -139,50 +159,51 @@ class WriteCommand extends Command
         return Command::SUCCESS;
     }
 
-    public function setTemplatePath($path)
-    {
-        $this->templatePath = $path;
-    }
-
-    public function getTemplatePath()
-    {
-        return $this->templatePath;
-    }
-
     /*==========================================================================
      *   Protected Functions
      *==========================================================================
      */
     protected function configure()
     {
-        $helpFilename = 'Specify the file name';
-
         $this
-            ->setHelp('Write an article for a blog or magazine.')
+            ->setHelp('Write a talk abstract and outline.')
             ->addOption(
                 'title',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'The Title of the Blog/Magazine Article'
+                'The title or subject of the presentation'
+            )
+            ->addOption(
+                'subtitle',
+                null,
+                InputOption::VALUE_NONE,
+                'Add a subtitle'
+            )
+            ->addOption(
+                'date_due',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'The date when you need to submit your talk in YYYY-MM-DD format.'
             )
             ->addArgument(
                 'filename',
                 InputArgument::REQUIRED,
-                'The name of the file in the current directory'
+                'The name of the file to write the output'
             );
     }
 
     protected function getSourceFileName($doc)
     {
-        $allowedTypes = ['article'];
+        $allowedTypes = ['talk'];
 
         switch ($doc){
-        case 'article':
-            return 'article.md';
+
+        case 'talk':
+            return 'talk.md';
                 break;
 
         default:
-            $message = 'You have used an unknown file type (' . $doc . '). '
+            $message = 'You have used an unknown file type(' . $doc . '). '
                . 'Please use one of the following: '
                . implode(', ', $allowedTypes);
             throw new UnexpectedValueException($message);
