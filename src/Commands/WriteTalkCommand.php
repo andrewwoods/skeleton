@@ -4,6 +4,7 @@ namespace Skel\Commands;
 
 use AndrewWoods\ChicagoStyle\Content;
 use Skel\Document;
+use Skel\Path;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,11 +24,8 @@ class WriteTalkCommand extends Command
 {
     protected static $defaultName = 'write:talk';
 
-    protected $skeletonPath = '';
+    protected Path $path;
 
-    protected $userProjectPath = '';
-
-    protected $templatePath = '';
 
 
     /*==========================================================================
@@ -42,13 +40,10 @@ class WriteTalkCommand extends Command
      *
      * @return void
      */
-    public function __construct(string $path, string $userProjectPath, string $templatePath)
+    public function __construct(Path $path)
     {
         parent::__construct();
-
-        $this->skeletonPath = $path;
-        $this->userProjectPath = $userProjectPath;
-        $this->templatePath = $templatePath;
+        $this->path = $path;
     }
 
     /*==========================================================================
@@ -78,10 +73,10 @@ class WriteTalkCommand extends Command
 
         $document = new Document();
 
-        $pathSource = $this->templatePath
+        $pathSource = $this->path->getTemplatePath()
         . '/' . $this->getSourceFileName($option['type']);
 
-        $pathTo = $this->userProjectPath
+        $pathTo = $this->path->getUserPath()
         . '/' . $arg['filename'];
 
         $io = new SymfonyStyle($input, $output);
@@ -112,7 +107,7 @@ class WriteTalkCommand extends Command
         }
 
         $content = new Content();
-        $loader = new \Twig\Loader\FilesystemLoader($this->templatePath);
+        $loader = new \Twig\Loader\FilesystemLoader($this->path->getTemplatePath());
         $twig = new \Twig\Environment(
             $loader, [
             'debug' => true,
