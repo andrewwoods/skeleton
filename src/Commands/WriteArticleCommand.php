@@ -20,7 +20,7 @@ use UnexpectedValueException;
     description: 'Write an article for a blog or magazine',
     hidden: false
 )]
-class WriteCommand extends Command
+class WriteArticleCommand extends Command
 {
     protected static $defaultName = 'write';
 

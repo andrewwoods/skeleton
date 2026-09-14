@@ -9,7 +9,7 @@ use Symfony\Component\Console\Helper\FormatterHelper;
 use Skel\Commands\CreateDocsCommand;
 use Skel\Commands\CreateLicenseCommand;
 use Skel\Commands\CreateGitCommand;
-use Skel\Commands\WriteCommand;
+use Skel\Commands\WriteArticleCommand;
 use Skel\Path;
 
 $skeletonPath = dirname(__FILE__, 2);
@@ -29,7 +29,7 @@ $application = new Application('Skeleton', '0.3.0');
 $application->add(new CreateDocsCommand($skeletonPath, $userProjectPath));
 $application->add(new CreateLicenseCommand($skeletonPath, $userProjectPath));
 $application->add(new CreateGitCommand($skeletonPath, $userProjectPath));
-$application->add(new WriteCommand($path));
+$application->add(new WriteArticleCommand($path));
 
 $application->run();
 
