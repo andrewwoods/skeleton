@@ -3,6 +3,7 @@
 namespace Skel\Commands;
 
 use Skel\Document;
+use Skel\Path;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -11,9 +12,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
     name: 'docs',
-    description: 'Creates a new user.',
+    description: 'Creates a new document for your project.',
     hidden: false,
-    aliases: ['app:add-user']
 )]
 class CreateDocsCommand extends Command
 {
@@ -21,23 +21,8 @@ class CreateDocsCommand extends Command
 
     protected static $defaultDoc = 'all';
 
+    protected Path $path;
 
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Create documentation for your project';
-
-    protected $skeletonPath = '';
-
-    protected $userProjectPath = '';
 
     /**
      * Create a new command instance.
@@ -46,12 +31,11 @@ class CreateDocsCommand extends Command
      *
      * @return void
      */
-    public function __construct(string $path, string $userProjectPath)
+    public function __construct(Path $path)
     {
         parent::__construct();
 
-        $this->skeletonPath = $path;
-        $this->userProjectPath = $userProjectPath;
+        $this->path = $path;
     }
 
 
@@ -71,9 +55,9 @@ class CreateDocsCommand extends Command
         $document = new Document();
         foreach ($arg['names'] as $doc) {
 
-            $pathSource = $this->skeletonPath . '/'
+            $pathSource = $this->path->getSkeletonPath() . '/'
                 . $document->getSourceFileName($doc);
-            $pathTo = $this->userProjectPath . '/'
+            $pathTo = $this->path->getUserPath() . '/'
                 . $document->getDestinationFileName($doc);
 
             copy($pathSource, $pathTo);
