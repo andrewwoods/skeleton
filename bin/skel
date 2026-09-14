@@ -10,6 +10,7 @@ use Skel\Commands\CreateDocsCommand;
 use Skel\Commands\CreateLicenseCommand;
 use Skel\Commands\CreateGitCommand;
 use Skel\Commands\WriteArticleCommand;
+use Skel\Commands\WriteTalkCommand;
 use Skel\Path;
 
 $skeletonPath = dirname(__FILE__, 2);
