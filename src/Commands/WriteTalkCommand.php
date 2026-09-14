@@ -3,6 +3,7 @@
 namespace Skel\Commands;
 
 use AndrewWoods\ChicagoStyle\Content;
+use Skel\DateTrait;
 use Skel\Document;
 use Skel\Path;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -22,6 +23,8 @@ use UnexpectedValueException;
 )]
 class WriteTalkCommand extends Command
 {
+    use DateTrait;
+
     protected static $defaultName = 'write:talk';
 
     protected Path $path;
@@ -114,17 +117,8 @@ class WriteTalkCommand extends Command
             ]
         );
 
-        $formatOpalDate = 'Y M d D';
-        $formatOpalDateTime = 'Y M d D H:i';
-        $dayInSeconds = 86_400;
-        $dateYear = date('Y');
-        $dateIsoDate = date('Y-m-d');
-        $dateIsoDateTime = date('Y-m-dTH:i');
-        $dateIsoTimeStamp = date('Y-m-dTH:i:sP');
-        $dateToday = date($formatOpalDate);
-        $dateDue = $dateDue ?: date($formatOpalDate, \time() + (10 * $dayInSeconds));
-        $nowDate = date($formatOpalDate);
-        $nowDateTime = date($formatOpalDateTime);
+
+        $dates = $this->getDates([ 'date_due' => $dateDue, ]);
 
         $fh = fopen($pathTo, 'w');
         if (! $fh) {
@@ -132,22 +126,19 @@ class WriteTalkCommand extends Command
             exit(1);
         }
         $templateFile = $this->getSourceFileName($option['type']);
+
+        $data = [
+        'title' => $content->titleCase($documentTitle),
+        'subtitle' => $subtitle ?? '',
+        'language' => "en-US",
+        ];
+        $data = array_merge($data, $dates);
+
         fwrite(
             $fh,
             $twig->render(
-                $templateFile, [
-                'title' => $content->titleCase($documentTitle),
-                'subtitle' => $subtitle ?? '',
-                'dateDue' => $dateDue,
-                'language' => "en-US",
-                'iso_date' => $dateIsoDate,
-                'iso_datetime' => $dateIsoDateTime,
-                'iso_timestamp' => $dateIsoTimeStamp,
-                'date_created' =>  $dateToday,
-                'date_due' =>  $dateDue,
-                'now_date' =>  $nowDate,
-                'now_datetime' =>  $nowDateTime,
-                ]
+                $templateFile,
+                $data
             )
         );
 
