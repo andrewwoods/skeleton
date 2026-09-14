@@ -3,6 +3,7 @@
 namespace Skel\Commands;
 
 use Skel\License;
+use Skel\Path;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,9 +13,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
     name: 'license',
-    description: 'Creates a new user.',
+    description: 'Add an open source software licencse to your project.',
     hidden: false,
-    aliases: ['app:add-user']
 )]
 class CreateLicenseCommand extends Command
 {
@@ -31,9 +31,7 @@ class CreateLicenseCommand extends Command
      */
     protected $description = 'Create a license for your project';
 
-    protected $skeletonPath = '';
-
-    protected $userProjectPath = '';
+    protected $path;
 
     /**
      * Create a new command instance.
@@ -42,12 +40,11 @@ class CreateLicenseCommand extends Command
      *
      * @return void
      */
-    public function __construct(string $path, string $userProjectPath)
+    public function __construct(Path $path)
     {
         parent::__construct();
 
-        $this->skeletonPath = $path;
-        $this->userProjectPath = $userProjectPath;
+        $this->path = $path;
     }
 
 
@@ -63,12 +60,14 @@ class CreateLicenseCommand extends Command
 
         $license = new License();
 
-        $pathSource = $this->skeletonPath . '/'
+        $pathSource = $this->path->getSkeletonPath() . '/'
             . $license->getSourceFileName($arg['name']);
-        $pathTo = $this->userProjectPath . '/'
+        $pathTo = $this->path->getUserPath() . '/'
             . $license->getDestinationFileName($arg['name']);
 
         copy($pathSource, $pathTo);
+
+        return Command::SUCCESS;
     }
 
 
