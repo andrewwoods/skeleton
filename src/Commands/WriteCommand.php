@@ -111,7 +111,7 @@ class WriteCommand extends Command
         $fh = fopen($pathTo, 'w');
         if (! $fh) {
             $output->writeln("Sorry, but the file '{$pathTo}' cannot be written");
-            exit(1);
+            return Command::FAILURE;
         }
         $templateFile = $this->getSourceFileName($option['type']);
         fwrite(
