@@ -22,7 +22,7 @@ $path = new Path($skeletonPath, $userProjectPath, $templatePath);
 
 try {
 
-$application = new Application('Skeleton', '0.3.0');
+$application = new Application('Skeleton', '0.4.0');
 
 //
 // Register your commands
