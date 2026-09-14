@@ -3,6 +3,7 @@
 namespace Skel\Commands;
 
 use Skel\Git;
+use Skel\Path;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,10 +34,7 @@ class CreateGitCommand extends Command
      */
     protected $description = 'Create Git files for your project';
 
-    protected $skeletonPath = '';
-
-    protected $userProjectPath = '';
-
+    protected $path;
     /**
      * Create a new command instance.
      *
@@ -44,12 +42,11 @@ class CreateGitCommand extends Command
      *
      * @return void
      */
-    public function __construct(string $path, string $userProjectPath)
+    public function __construct(Path $path)
     {
         parent::__construct();
 
-        $this->skeletonPath = $path;
-        $this->userProjectPath = $userProjectPath;
+        $this->path = $path;
     }
 
 
@@ -66,14 +63,14 @@ class CreateGitCommand extends Command
         $document = new Git();
         foreach ([$arg['names']] as $doc) {
 
-            $pathSource = $this->skeletonPath . '/'
+            $pathSource = $this->path->getSkeletonPath() . '/'
                 . $document->getSourceFileName($doc);
-            $pathTo = $this->userProjectPath . '/'
+            $pathTo = $this->path->getUserPath() . '/'
                 . $document->getDestinationFileName($doc);
 
             copy($pathSource, $pathTo);
         }
-
+        return Command::SUCCESS;
     }
 
     protected function configure()

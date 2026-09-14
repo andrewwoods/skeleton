@@ -29,7 +29,7 @@ $application = new Application('Skeleton', '0.3.0');
 //
 $application->add(new CreateDocsCommand($skeletonPath, $userProjectPath));
 $application->add(new CreateLicenseCommand($skeletonPath, $userProjectPath));
-$application->add(new CreateGitCommand($skeletonPath, $userProjectPath));
+$application->add(new CreateGitCommand($path));
 $application->add(new WriteTalkCommand($path));
 $application->add(new WriteArticleCommand($path));
 
