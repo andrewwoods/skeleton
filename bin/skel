@@ -10,11 +10,14 @@ use Skel\Commands\CreateDocsCommand;
 use Skel\Commands\CreateLicenseCommand;
 use Skel\Commands\CreateGitCommand;
 use Skel\Commands\WriteCommand;
+use Skel\Path;
 
 $skeletonPath = dirname(__FILE__, 2);
 $userProjectPath = getcwd();
 $homeDir = getenv('HOME');
 $templatePath = "{$homeDir}/dotfiles/templates";
+
+$path = new Path($skeletonPath, $userProjectPath, $templatePath);
 
 try {
 
@@ -26,10 +29,7 @@ $application = new Application('Skeleton', '0.3.0');
 $application->add(new CreateDocsCommand($skeletonPath, $userProjectPath));
 $application->add(new CreateLicenseCommand($skeletonPath, $userProjectPath));
 $application->add(new CreateGitCommand($skeletonPath, $userProjectPath));
-
-$write = new WriteCommand($skeletonPath, $userProjectPath);
-$write->setTemplatePath($templatePath);
-$application->add($write);
+$application->add(new WriteCommand($path));
 
 $application->run();
 

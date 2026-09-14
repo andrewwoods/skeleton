@@ -4,6 +4,7 @@ namespace Skel\Commands;
 
 use AndrewWoods\ChicagoStyle\Content;
 use Skel\Document;
+use Skel\Path;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,13 +24,9 @@ class WriteCommand extends Command
 {
     protected static $defaultName = 'write';
 
-    protected static $defaultType = 'article';
+    protected $type = 'article';
 
-    protected $skeletonPath = '';
-
-    protected $userProjectPath = '';
-
-    protected $templatePath = '';
+    protected Path $path;
 
 
     /*==========================================================================
@@ -44,13 +41,11 @@ class WriteCommand extends Command
      *
      * @return void
      */
-    public function __construct(string $path, string $userProjectPath, string $templatePath)
+    public function __construct(Path $path)
     {
         parent::__construct();
 
-        $this->skeletonPath = $path;
-        $this->userProjectPath = $userProjectPath;
-        $this->templatePath = $templatePath;
+        $this->path = $path;
     }
 
     /*==========================================================================
@@ -68,7 +63,7 @@ class WriteCommand extends Command
         $defaultTitle = '';
 
         $option = [];
-        $option['type'] = 'article';
+        $option['type'] = $this->type;
         $option['title'] = $input->getOption('title') ?? $defaultTitle;
 
         $arg = [];
@@ -76,10 +71,10 @@ class WriteCommand extends Command
 
         $document = new Document();
 
-        $pathSource = $this->getTemplatePath()
+        $pathSource = $this->path->getTemplatePath()
             . '/' . $this->getSourceFileName($option['type']);
 
-        $pathTo = $this->userProjectPath
+        $pathTo = $this->path->getUserPath()
             . '/' . $arg['filename'];
 
         $io = new SymfonyStyle($input, $output);
@@ -94,7 +89,7 @@ class WriteCommand extends Command
         }
 
         $content = new Content();
-        $loader = new \Twig\Loader\FilesystemLoader($this->getTemplatePath());
+        $loader = new \Twig\Loader\FilesystemLoader($this->path->getTemplatePath());
         $twig = new \Twig\Environment(
             $loader, [
             'debug' => true,
@@ -137,16 +132,6 @@ class WriteCommand extends Command
         );
 
         return Command::SUCCESS;
-    }
-
-    public function setTemplatePath($path)
-    {
-        $this->templatePath = $path;
-    }
-
-    public function getTemplatePath()
-    {
-        return $this->templatePath;
     }
 
     /*==========================================================================
