@@ -13,7 +13,7 @@
 
 namespace Skel;
 
-use unexpectedvalueexception;
+use UnexpectedValueException;
 
 class License
 {
@@ -41,7 +41,7 @@ class License
             $message = 'You have used an unknown file type (' . $doc . '). '
                . 'Please use one of the following: '
                . implode(', ', $this->types);
-            throw new unexpectedvalueexception($message);
+            throw new UnexpectedValueException($message);
         }
     }
 

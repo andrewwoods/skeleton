@@ -13,7 +13,7 @@
 
 namespace Skel;
 
-use unexpectedvalueexception;
+use UnexpectedValueException;
 
 class Document
 {
@@ -50,7 +50,7 @@ class Document
             $message = 'You have used an unknown file type (' . $doc . '). '
                . 'Please use one of the following: '
                . implode(', ', $this->docTypes);
-            throw new unexpectedvalueexception($message);
+            throw new UnexpectedValueException($message);
         }
     }
 
