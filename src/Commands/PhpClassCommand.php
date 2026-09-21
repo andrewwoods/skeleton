@@ -100,17 +100,12 @@ class PhpClassCommand extends Command
             ]
         );
 
-        $formatOpalDate = 'Y M d D';
-        $formatOpalDateTime = 'Y M d D H:i';
-        $dayInSeconds = 86_400;
-        $dateYear = date('Y');
-        $dateIsoDate = date('Y-m-d');
-        $dateIsoDateTime = date('Y-m-dTH:i');
-        $dateIsoTimeStamp = date('Y-m-dTH:i:sP');
-        $dateToday = date($formatOpalDate);
-        $dateDue = date($formatOpalDate, \time() + (10 * $dayInSeconds));
-        $nowDate = date($formatOpalDate);
-        $nowDateTime = date($formatOpalDateTime);
+        $userData = [
+            'extends_suffix' => $baseClassName ? "extends $baseClassName" : '',
+            'class_name' => $content->titleCase($className),
+            'package_name' => $content->titleCase($packageName),
+            'language' => "en-US",
+        ]; 
 
         $fh = fopen($pathTo, 'w');
         if (! $fh) {
@@ -118,22 +113,12 @@ class PhpClassCommand extends Command
             return Command::FAILURE;
         }
         $templateFile = $this->getSourceFileName();
+
         fwrite(
             $fh,
             $twig->render(
-                $templateFile, [
-                'extends_suffix' => $baseClassName ? "extends $baseClassName" : '',
-                'class_name' => $content->titleCase($className),
-                'package_name' => $content->titleCase($packageName),
-                'language' => "en-US",
-                'iso_date' => $dateIsoDate,
-                'iso_datetime' => $dateIsoDateTime,
-                'iso_timestamp' => $dateIsoTimeStamp,
-                'date_created' =>  $dateToday,
-                'date_due' =>  $dateDue,
-                'now_date' =>  $nowDate,
-                'now_datetime' =>  $nowDateTime,
-                ]
+                $templateFile, 
+                $userData 
             )
         );
 
