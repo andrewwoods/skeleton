@@ -11,6 +11,7 @@ use Skel\Commands\CreateLicenseCommand;
 use Skel\Commands\CreateGitCommand;
 use Skel\Commands\WriteArticleCommand;
 use Skel\Commands\WriteTalkCommand;
+use Skel\Commands\PhpClassCommand;
 use Skel\Path;
 
 $skeletonPath = dirname(__FILE__, 2);
@@ -32,6 +33,7 @@ $application->add(new CreateLicenseCommand($path));
 $application->add(new CreateGitCommand($path));
 $application->add(new WriteTalkCommand($path));
 $application->add(new WriteArticleCommand($path));
+$application->add(new PhpClassCommand($path));
 
 $application->run();
 

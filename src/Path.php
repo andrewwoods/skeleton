@@ -27,6 +27,15 @@ class Path
         return $this->skeletonPath;
     }
 
+    public function getSkeletonTemplatePath($subdir = '')
+    {
+        $templatePath = '/templates';
+        if ($subdir) {
+            $templatePath .= '/' . $subdir; 
+        }
+        return $this->skeletonPath . $templatePath;
+    }
+
     public function setTemplatePath($path)
     {
         $this->templatePath = $path;
