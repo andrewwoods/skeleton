@@ -18,24 +18,21 @@ use XdgBaseDir\Xdg;
 $skeletonPath = dirname(__FILE__, 2);
 $userProjectPath = getcwd();
 
-
 $path = new Path($skeletonPath, $userProjectPath, new Xdg());
 
 try {
 
-$application = new Application('Skeleton', '0.4.0');
+    $application = new Application('Skeleton', '0.4.0');
 
-//
-// Register your commands
-//
-$application->add(new CreateDocsCommand($path));
-$application->add(new CreateLicenseCommand($path));
-$application->add(new CreateGitCommand($path));
-$application->add(new WriteTalkCommand($path));
-$application->add(new WriteArticleCommand($path));
-$application->add(new PhpClassCommand($path));
+    // Register your commands
+    $application->add(new CreateDocsCommand($path));
+    $application->add(new CreateLicenseCommand($path));
+    $application->add(new CreateGitCommand($path));
+    $application->add(new WriteTalkCommand($path));
+    $application->add(new WriteArticleCommand($path));
+    $application->add(new PhpClassCommand($path));
 
-$application->run();
+    $application->run();
 
 } catch (Exception $exception) {
     $messages = ['Error'];
@@ -46,3 +43,4 @@ $application->run();
 
     echo $formatted . "\n";
 }
+
