@@ -69,31 +69,40 @@ class PhpClassCommand extends Command
         $arg['classname'] = $input->getArgument('classname') ?? null;
 
         $document = new Document();
+        // Set the order of directories here to look for templates.
+        $sourceDirs = $this->path->getTemplateDirs('php');
 
-        $pathSourceDir = $this->path->getSkeletonTemplatePath('php');
-        $pathSource = $pathSourceDir 
-            . '/' . $this->getSourceFileName();
+        $sourceDir = '';
+        $templateFile = '';
+        foreach($sourceDirs as $dir)  {
+            $sourceDir = $dir;
+            $templateFile = $this->getSourceFileName();
+            $sourcePath = $dir . '/' . $templateFile;
+            if (file_exists($sourceDir) && file_exists($sourcePath)) { 
+                break;
+            } 
+        }
 
-        $pathSourceUserDir = $this->path->getTemplatePath();
-        $pathSourceUser = $pathSourceUserDir
-            . '/' . $this->getSourceFileName();
-
-        if (file_exists($pathSourceUser)) { 
-            $pathSource = $pathSourceUser;
-            $pathSourceDir = $pathSourceUserDir;
-        } 
-
-        $pathTo = $this->path->getUserPath()
+        $destinationPath = $this->path->getUserProjectDir()
             . '/' . $this->getDestinationFileName($arg['classname']);
 
         $io = new SymfonyStyle($input, $output);
+        if ($io->isVerbose()) {
+            $io->info(
+                [
+                    'Source Directories=' . print_r($sourceDirs, true),
+                    'Source Path=' . $sourcePath,
+                    'Destination Path=' . $destinationPath,
+                ]
+            );
+        }
 
         $baseClassName = $option['extends'];
         $packageName = $option['package'];
         $className = $arg['classname'];
 
         $content = new Content();
-        $loader = new \Twig\Loader\FilesystemLoader($pathSourceDir);
+        $loader = new \Twig\Loader\FilesystemLoader($sourceDir);
         $twig = new \Twig\Environment(
             $loader, [
             'debug' => true,
@@ -105,14 +114,14 @@ class PhpClassCommand extends Command
             'class_name' => $content->titleCase($className),
             'package_name' => $content->titleCase($packageName),
             'language' => "en-US",
+            'date_year' => date('Y'),
         ]; 
 
-        $fh = fopen($pathTo, 'w');
+        $fh = fopen($destinationPath, 'w');
         if (! $fh) {
-            $output->writeln("Sorry, but the file '{$pathTo}' cannot be written");
+            $output->writeln("Sorry, but the file '{$destinationPath}' cannot be written");
             return Command::FAILURE;
         }
-        $templateFile = $this->getSourceFileName();
 
         fwrite(
             $fh,

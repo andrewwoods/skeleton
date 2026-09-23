@@ -10,7 +10,8 @@
     "require": {
         "symfony/console": "^7.1",
         "andrewwoods/chicago-style": "^0.1.0",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "dnoegel/php-xdg-base-dir": "^0.1.1"
     },
     "autoload": {
         "psr-4": {

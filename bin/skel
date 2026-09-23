@@ -13,11 +13,13 @@ use Skel\Commands\WriteArticleCommand;
 use Skel\Commands\WriteTalkCommand;
 use Skel\Commands\PhpClassCommand;
 use Skel\Path;
+use XdgBaseDir\Xdg;
 
 $skeletonPath = dirname(__FILE__, 2);
 $userProjectPath = getcwd();
 
-$path = new Path($skeletonPath, $userProjectPath);
+
+$path = new Path($skeletonPath, $userProjectPath, new Xdg());
 
 try {
 

@@ -2,17 +2,25 @@
 
 namespace Skel;
 
+use Symfony\Component\String\Exception\InvalidArgumentException;
+use XdgBaseDir\Xdg;
+
 class Path
 {
     protected $skeletonPath = '';
 
-    protected $userProjectPath = '';
+    protected $userProjectDir = '';
 
+    protected $userXdgConfigDir = '';
 
-    public function __construct(string $path, string $userProjectPath)
+    protected $userXdgDataDir = '';
+
+    public function __construct(string $path, string $userProjectPath, Xdg $xdg)
     {
         $this->skeletonPath = $path;
-        $this->userProjectPath = $userProjectPath;
+        $this->userProjectDir = $userProjectPath;
+        $this->userXdgDataDir = $xdg->getHomeDataDir();
+        $this->userXdgConfigDir = $xdg->getHomeConfigDir();
     }
 
     public function setSkeletonPath($path)
@@ -20,33 +28,45 @@ class Path
         $this->skeletonPath = $path;
     }
 
-    public function getSkeletonPath()
+    public function getSkeletonDir()
     {
         return $this->skeletonPath;
     }
 
-    public function getSkeletonTemplatePath($subdir = '')
+    public function getSkeletonTemplateDir(string $subdir = ''): string
     {
-        $templatePath = '/templates';
+        $templatePath = $this->getSkeletonDir() . '/templates';
         if ($subdir) {
-            $templatePath .= '/' . $subdir; 
+            $templatePath = "{$templatePath}/" . $subdir;
         }
-        return $this->skeletonPath . $templatePath;
+        if (! file_exists($templatePath)) {
+            $message = sprintf("The directory '%s' does not exist", $templatePath);
+            throw new InvalidArgumentException($message);
+        } 
+        return $templatePath;
     }
 
+    public function setUserProjectDir($path)
     {
+        $this->userProjectDir = $path;
     }
 
+    public function getUserProjectDir()
     {
+        return $this->userProjectDir;
     }
 
-    public function setUserPath($path)
+    public function getTemplateDirs($subDirectory = '')
     {
-        $this->path = $path;
-    }
+        $data = [];
+        $data[] = $this->userXdgDataDir;
+        $data[] = $this->userXdgDataDir . '/skel';
+        $data[] = $this->getUserProjectDir();
+        if ($subDirectory) {
+            $data[] = $this->getSkeletonTemplateDir($subDirectory);
+        }
+        $data[] = $this->getSkeletonTemplateDir();
 
-    public function getUserPath()
-    {
-        return $this->userProjectPath;
+        return $data;
     }
 }
