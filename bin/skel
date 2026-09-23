@@ -16,10 +16,8 @@ use Skel\Path;
 
 $skeletonPath = dirname(__FILE__, 2);
 $userProjectPath = getcwd();
-$homeDir = getenv('HOME');
-$templatePath = "{$homeDir}/dotfiles/templates";
 
-$path = new Path($skeletonPath, $userProjectPath, $templatePath);
+$path = new Path($skeletonPath, $userProjectPath);
 
 try {
 
