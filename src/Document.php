@@ -29,57 +29,32 @@ class Document
 
     public function getSourceFileName($doc)
     {
-        switch ($doc){
-        case 'changelog':
-            return 'CHANGELOG.md';
-                break;
+        $message = 'You have used an unknown file type "' . $doc . '". '
+                   . 'Please use one of the following: '
+                   . implode(', ', $this->docTypes);
 
-        case 'contributing':
-            return 'docs/CONTRIBUTING.md';
-                break;
-
-        case 'humans':
-            return 'docs/humans.txt';
-                break;
-
-        case "readme":
-            return 'project.README.md';
-                break;
-
-        default:
-            $message = 'You have used an unknown file type (' . $doc . '). '
-               . 'Please use one of the following: '
-               . implode(', ', $this->docTypes);
-            throw new UnexpectedValueException($message);
-        }
+        return match ($doc){
+            'changelog' => 'CHANGELOG.md',
+            'contributing' => 'docs/CONTRIBUTING.md',
+            'humans' => 'docs/humans.txt',
+            "readme" => 'project.README.md',
+            default => throw new UnexpectedValueException($message),
+        };
     }
 
 
     public function getDestinationFileName($doc)
     {
-        switch ($doc){
-        case 'changelog':
-            return 'CHANGELOG.md';
-                break;
+        $message = 'You have used an unknown file type. '
+                   . 'Please use one of the following: '
+                   . implode(', ', $this->docTypes);
 
-        case 'contributing':
-            return 'CONTRIBUTING.md';
-                break;
-
-        case 'humans':
-            return 'humans.txt';
-                break;
-
-        case "readme":
-            return 'README.md';
-                break;
-
-        default:
-            $message = 'You have used an unknown file type. '
-                . 'Please use one of the following: '
-                . implode(', ', $this->docTypes);
-            throw new UnexpectedValueException($message);
-
-        }
+        return match ($doc){
+            'changelog' => 'CHANGELOG.md',
+            'contributing' => 'CONTRIBUTING.md',
+            'humans' => 'humans.txt',
+            'readme' => 'README.md',
+            default => throw new UnexpectedValueException($message),
+        };
     }
 }
