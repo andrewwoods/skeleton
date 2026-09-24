@@ -59,8 +59,11 @@ class Path
     public function getTemplateDirs($subDirectory = '')
     {
         $data = [];
-        $data[] = $this->userXdgDataDir;
+        if ($subDirectory) {
+            $data[] = $this->userXdgDataDir . '/skel/' . $subDirectory;
+        }
         $data[] = $this->userXdgDataDir . '/skel';
+        $data[] = $this->userXdgDataDir;
         $data[] = $this->getUserProjectDir();
         if ($subDirectory) {
             $data[] = $this->getSkeletonTemplateDir($subDirectory);
