@@ -7,7 +7,7 @@ use XdgBaseDir\Xdg;
 
 class Path
 {
-    protected $skeletonPath = '';
+    protected $skeletonDir = '';
 
     protected $userProjectDir = '';
 
@@ -15,40 +15,40 @@ class Path
 
     protected $userXdgDataDir = '';
 
-    public function __construct(string $path, string $userProjectPath, Xdg $xdg)
+    public function __construct(string $dir, string $userProjectDir, Xdg $xdg)
     {
-        $this->skeletonPath = $path;
-        $this->userProjectDir = $userProjectPath;
+        $this->skeletonDir = $dir;
+        $this->userProjectDir = $userProjectDir;
         $this->userXdgDataDir = $xdg->getHomeDataDir();
         $this->userXdgConfigDir = $xdg->getHomeConfigDir();
     }
 
-    public function setSkeletonPath($path)
+    public function setSkeletonDir($dir)
     {
-        $this->skeletonPath = $path;
+        $this->skeletonDir = $dir;
     }
 
     public function getSkeletonDir()
     {
-        return $this->skeletonPath;
+        return $this->skeletonDir;
     }
 
     public function getSkeletonTemplateDir(string $subdir = ''): string
     {
-        $templatePath = $this->getSkeletonDir() . '/templates';
+        $templateDir = $this->getSkeletonDir() . '/templates';
         if ($subdir) {
-            $templatePath = "{$templatePath}/" . $subdir;
+            $templateDir = "{$templateDir}/" . $subdir;
         }
-        if (! file_exists($templatePath)) {
-            $message = sprintf("The directory '%s' does not exist", $templatePath);
+        if (! file_exists($templateDir)) {
+            $message = sprintf("The directory '%s' does not exist", $templateDir);
             throw new InvalidArgumentException($message);
         } 
-        return $templatePath;
+        return $templateDir;
     }
 
-    public function setUserProjectDir($path)
+    public function setUserProjectDir($dir)
     {
-        $this->userProjectDir = $path;
+        $this->userProjectDir = $dir;
     }
 
     public function getUserProjectDir()
