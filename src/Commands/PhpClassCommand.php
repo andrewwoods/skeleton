@@ -116,7 +116,7 @@ class PhpClassCommand extends Command
 
         $fh = fopen($destinationPath, 'w');
         if (! $fh) {
-            $output->writeln("Sorry, but the file '{$destinationPath}' cannot be written");
+            $io->error("Sorry, but the file '{$destinationPath}' cannot be written");
             return Command::FAILURE;
         }
 
