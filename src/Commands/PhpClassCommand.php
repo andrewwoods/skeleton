@@ -58,12 +58,9 @@ class PhpClassCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $defaultBaseClass = '';
-        $defaultPackage = 'Application';
-
         $option = [];
-        $option['extends'] = $input->getOption('extends') ?? $defaultBaseClass;
-        $option['package'] = $input->getOption('package') ?? $defaultPackage;
+        $option['extends'] = $input->getOption('extends');
+        $option['package'] = $input->getOption('package');
 
         $arg = [];
         $arg['classname'] = $input->getArgument('classname') ?? null;
@@ -146,13 +143,15 @@ class PhpClassCommand extends Command
                 'extends',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'The base class you are extending'
+                'The base class you are extending',
+                ''
             )
             ->addOption(
                 'package',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'The namespace containing your class'
+                'The namespace containing your class',
+                'Application'
             )
             ->addArgument(
                 'classname',
