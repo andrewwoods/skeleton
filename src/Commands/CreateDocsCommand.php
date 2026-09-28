@@ -55,9 +55,9 @@ class CreateDocsCommand extends Command
         $document = new Document();
         foreach ($arg['names'] as $doc) {
 
-            $pathSource = $this->path->getSkeletonPath() . '/'
+            $pathSource = $this->path->getSkeletonDir() . '/'
                 . $document->getSourceFileName($doc);
-            $pathTo = $this->path->getUserPath() . '/'
+            $pathTo = $this->path->getUserProjectDir() . '/'
                 . $document->getDestinationFileName($doc);
 
             copy($pathSource, $pathTo);
