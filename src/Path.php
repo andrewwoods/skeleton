@@ -83,6 +83,19 @@ class Path
         return $data;
     }
 
+    public function getConfigFiles()
+    {
+        $configFile = '/config.yaml';
+
+        $data = [];
+        $data[] = $this->getSkelUserXdgConfigDir() . $configFile;
+        $data[] = $this->getUserXdgConfigDir() . $configFile;
+        $data[] = $this->getUserHomeDir() . $configFile;
+        $data[] = $this->getUserProjectDir() . $configFile;
+
+        return $data;
+    }
+
     /**
      * The user's XDG_CONFIG_HOME directory.
      *
