@@ -47,7 +47,7 @@ class CreateDocsCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $arg = [];
-        $arg['names'] = $input->getArgument('names') ?? self::$defaultDoc;
+        $arg['names'] = $input->getArgument('names');
         if (count($arg['names']) === 0 || $arg['names'][0] === self::$defaultDoc ) {
             $arg['names'] = ['readme', 'changelog', 'contributing', 'humans'];
         }
@@ -69,8 +69,7 @@ class CreateDocsCommand extends Command
     protected function configure()
     {
         $helpNames = 'specify the file name. choose from: ' .
-                     'readme, changelog, contributing, and humans. ' .
-                     self::$defaultDoc . ' is the default.';
+                     'readme, changelog, contributing, and humans.';
 
         $this
             ->setDescription('Creates project docs.')
@@ -78,7 +77,8 @@ class CreateDocsCommand extends Command
             ->addArgument(
                 'names',
                 InputArgument::IS_ARRAY | InputArgument::OPTIONAL,
-                $helpNames
+                $helpNames,
+                [ self::$defaultDoc ]
             );
     }
 
