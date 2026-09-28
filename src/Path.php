@@ -11,6 +11,10 @@ class Path
 
     protected $userProjectDir = '';
 
+    /**
+     * @var string The users $HOME directory
+     */
+    protected $userHomeDir = '';
     protected $userXdgConfigDir = '';
 
     protected $userXdgDataDir = '';
@@ -19,6 +23,7 @@ class Path
     {
         $this->skeletonDir = $dir;
         $this->userProjectDir = $userProjectDir;
+        $this->userHomeDir = $xdg->getHomeDir();
         $this->userXdgDataDir = $xdg->getHomeDataDir();
         $this->userXdgConfigDir = $xdg->getHomeConfigDir();
     }
@@ -56,6 +61,11 @@ class Path
         return $this->userProjectDir;
     }
 
+    public function getUserHomeDir()
+    {
+        return $this->userHomeDir;
+    }
+
     public function getTemplateDirs($subDirectory = '')
     {
         $data = [];
@@ -64,7 +74,7 @@ class Path
         }
         $data[] = $this->userXdgDataDir . '/skel';
         $data[] = $this->userXdgDataDir;
-        $data[] = $this->getUserProjectDir();
+        $data[] = $this->getUserHomeDir();
         if ($subDirectory) {
             $data[] = $this->getSkeletonTemplateDir($subDirectory);
         }
