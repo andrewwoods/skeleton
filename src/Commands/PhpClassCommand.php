@@ -236,6 +236,7 @@ class PhpClassCommand extends Command
     protected function getSourceFileName($template)
     {
         return match ($template) {
+            'phpunit' => 'phpunit-class.php',
             'wordpress' => 'wordpress-class.php',
             'default' => 'php-class.php',
         };
