@@ -6,16 +6,32 @@ use XdgBaseDir\Xdg;
 
 class Path
 {
+
+    /**
+     * @var string Path to the directory where skeleton is installed.
+     */
     protected $skeletonDir = '';
 
+    /**
+     * @var string The current directory where skel is begin run
+     */
     protected $userProjectDir = '';
 
     /**
      * @var string The users $HOME directory
      */
     protected $userHomeDir = '';
+
+    /**
+     * @var string The users' configuration directory. Default: $HOME/.config
+     * but can be overriden by the XDG_CONFIG_HOME environment variable.
+     */
     protected $userXdgConfigDir = '';
 
+    /**
+     * @var string The users' data directory. Default: $HOME/.local/share
+     * but can be overriden by the XDG_DATA_HOME environment variable.
+     */
     protected $userXdgDataDir = '';
 
     public function __construct(string $dir, string $userProjectDir, Xdg $xdg)
