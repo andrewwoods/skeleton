@@ -6,12 +6,17 @@
             "type": "vcs",
             "url": "https://github.com/andrewwoods/chicago-style"
         }
+        ,{
+            "type": "vcs",
+            "url": "https://github.com/andrewwoods/utility-belt"
+        }
     ],
     "require": {
         "symfony/console": "^7.1",
         "andrewwoods/chicago-style": "^0.1.0",
         "twig/twig": "^3.0",
-        "dnoegel/php-xdg-base-dir": "^0.1.1"
+        "dnoegel/php-xdg-base-dir": "^0.1.1",
+        "symfony/yaml": "^7.4"
     },
     "autoload": {
         "psr-4": {
