@@ -81,4 +81,13 @@ class Path
     public function getSkelUserXdgConfigDir() {
         return $this->userXdgConfigDir . '/skel';
     }
+
+    /**
+     * The skel subdirectory of XDG_DATA_HOME.
+     *
+     * @return string
+     */
+    public function getSkelUserXdgDataDir() {
+        return $this->userXdgDataDir . '/skel';
+    }
 }
