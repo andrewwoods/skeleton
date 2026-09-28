@@ -3,7 +3,6 @@
 namespace Skel\Commands;
 
 use AndrewWoods\ChicagoStyle\Content;
-use Skel\Document;
 use Skel\Path;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -11,10 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\String\Exception\InvalidArgumentException;
-use UnexpectedValueException;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
 
@@ -69,8 +65,6 @@ class PhpClassCommand extends Command
         $arg = [];
         $arg['classname'] = $input->getArgument('classname') ?? null;
 
-        $document = new Document();
-        // Set the order of directories here to look for templates.
         $io = new SymfonyStyle($input, $output);
 
         $sourceDirs = $this->path->getTemplateDirs('php');
@@ -107,7 +101,6 @@ class PhpClassCommand extends Command
         $templateFile = '';
         $userSourceDir = '';
         $userSourcePath = '';
-        $userSubDir = '';
         $userTemplateFile = '';
         if (isset($config['templates']['php-class'][ $option['template'] ])) {
             $userTemplateFile = $config['templates']['php-class'][ $option['template'] ] ;

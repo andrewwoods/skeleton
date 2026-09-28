@@ -2,7 +2,6 @@
 
 namespace Skel;
 
-use Symfony\Component\String\Exception\InvalidArgumentException;
 use XdgBaseDir\Xdg;
 
 class Path

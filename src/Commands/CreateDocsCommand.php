@@ -17,8 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class CreateDocsCommand extends Command
 {
-    protected static $defaultName = 'docs';
-
     protected static $defaultDoc = 'all';
 
     protected Path $path;
