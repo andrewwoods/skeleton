@@ -71,9 +71,30 @@ class PhpClassCommand extends Command
 
         $document = new Document();
         // Set the order of directories here to look for templates.
+        $io = new SymfonyStyle($input, $output);
+
         $sourceDirs = $this->path->getTemplateDirs('php');
         $configFile = $this->hasConfigFile();
+
         $config = null;
+        if ($io->isVerbose()) {
+            if ($configFile === false ) {
+                $io->warning(
+                    [
+                        'Config file is not available',
+                        'Create a config file in one of these locations:',
+                         implode("\n", $this->path->getConfigFiles()),
+                    ]
+                );
+            } else {
+                $io->success(
+                  [
+                    'Config file found',
+                    $configFile
+                  ]
+                );
+            }
+        }
 
         try {
             $config = Yaml::parseFile($configFile);
@@ -112,15 +133,32 @@ class PhpClassCommand extends Command
             } 
         }
 
+        if ($io->isVerbose()) {
+            $io->success(
+                [
+                    "sourceDir={$sourceDir}",
+                    "templateFile={$templateFile}",
+                ]
+            );
+        }
+
         $destinationPath = $this->path->getUserProjectDir()
             . '/' . $this->getDestinationFileName($arg['classname']);
 
-        $io = new SymfonyStyle($input, $output);
-        if ($io->isVerbose()) {
-            $io->info(
+        if ($io->isVeryVerbose()) {
+            $io->note(
                 [
+                    'Config=' . print_r($config, true),
+                    'Config File=' . $configFile,
+                    'Config Files=' . print_r($this->path->getConfigFiles(), true),
+                    'option[template]=' . $option['template'],
+                    'Template File=' . $templateFile,
                     'Source Directories=' . print_r($sourceDirs, true),
-                    'Source Path=' . $sourcePath,
+                    'Source Dir=' . $sourceDir,
+                    'Default Source Path=' . $defaultSourcePath,
+                    'User Source Dir=' . $userSourceDir,
+                    'User Source Path=' . $userSourcePath,
+                    'User Template File=' . $userTemplateFile,
                     'Destination Path=' . $destinationPath,
                 ]
             );
