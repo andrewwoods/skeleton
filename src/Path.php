@@ -70,10 +70,10 @@ class Path
     {
         $data = [];
         if ($subDirectory) {
-            $data[] = $this->userXdgDataDir . '/skel/' . $subDirectory;
+            $data[] = "{$this->getSkelUserXdgDataDir()}/{$subDirectory}";
         }
-        $data[] = $this->userXdgDataDir . '/skel';
-        $data[] = $this->userXdgDataDir;
+        $data[] = $this->getSkelUserXdgDataDir();
+        $data[] = $this->getUserXdgDataDir();
         $data[] = $this->getUserHomeDir();
         if ($subDirectory) {
             $data[] = $this->getSkeletonTemplateDir($subDirectory);
@@ -81,6 +81,24 @@ class Path
         $data[] = $this->getSkeletonTemplateDir();
 
         return $data;
+    }
+
+    /**
+     * The user's XDG_CONFIG_HOME directory.
+     *
+     * @return string
+     */
+    public function getUserXdgConfigDir() {
+        return $this->userXdgConfigDir;
+    }
+
+    /**
+     * The user's XDG_DATA_HOME directory.
+     *
+     * @return string
+     */
+    public function getUserXdgDataDir() {
+        return $this->userXdgDataDir;
     }
 
     /**
