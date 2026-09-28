@@ -1,0 +1,11 @@
+# config.yaml
+user:
+    given: your_firstname
+    surname: your_lastname
+    email: user@example.com
+
+templates:
+    php-class:
+        default: templates/php/php-class.php 
+        wordpress: templates/php/wordpress-class.php 
+
