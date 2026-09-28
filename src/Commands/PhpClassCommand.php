@@ -13,7 +13,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\String\Exception\InvalidArgumentException;
 use UnexpectedValueException;
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 #[AsCommand(
     name: 'php:class',
@@ -61,6 +64,7 @@ class PhpClassCommand extends Command
         $option = [];
         $option['extends'] = $input->getOption('extends');
         $option['package'] = $input->getOption('package');
+        $option['template'] = $input->getOption('template');
 
         $arg = [];
         $arg['classname'] = $input->getArgument('classname') ?? null;
@@ -68,14 +72,42 @@ class PhpClassCommand extends Command
         $document = new Document();
         // Set the order of directories here to look for templates.
         $sourceDirs = $this->path->getTemplateDirs('php');
+        $configFile = $this->hasConfigFile();
+        $config = null;
 
+        try {
+            $config = Yaml::parseFile($configFile);
+        } catch (ParseException $e) {
+            $output->writeln('<error>Unable to parse YAML: ' . $e->getMessage() . '</error>');
+            return Command::FAILURE;
+        }
+        
         $sourceDir = '';
         $templateFile = '';
+        $userSourceDir = '';
+        $userSourcePath = '';
+        $userSubDir = '';
+        $userTemplateFile = '';
+        if (isset($config['templates']['php-class'][ $option['template'] ])) {
+            $userTemplateFile = $config['templates']['php-class'][ $option['template'] ] ;
+        }
+
+        $defaultTemplateFile = $this->getSourceFileName($option['template']);
+
         foreach($sourceDirs as $dir)  {
-            $sourceDir = $dir;
-            $templateFile = $this->getSourceFileName();
-            $sourcePath = $dir . '/' . $templateFile;
-            if (file_exists($sourceDir) && file_exists($sourcePath)) { 
+            $sourceDir = '';
+            $templateFile = '';
+            $userSourcePath = "{$dir}/{$userTemplateFile}";
+            if (file_exists($userSourcePath)) {
+                $sourceDir = dirname($userSourcePath);
+                $templateFile = basename($userSourcePath);
+                break;
+            }
+
+            $defaultSourcePath = "{$dir}/{$defaultTemplateFile}";
+            if (file_exists($defaultSourcePath)) {
+                $sourceDir = dirname($defaultSourcePath);
+                $templateFile = basename($defaultSourcePath);
                 break;
             } 
         }
@@ -107,6 +139,9 @@ class PhpClassCommand extends Command
         );
 
         $userData = [
+            'given' => $config['user']['given'] ?? '',
+            'surname' => $config['user']['surname'] ?? '',
+            'email' => $config['user']['email'] ?? '',
             'extends_suffix' => $baseClassName ? "extends $baseClassName" : '',
             'class_name' => $content->titleCase($className),
             'package_name' => $content->titleCase($packageName),
@@ -153,6 +188,13 @@ class PhpClassCommand extends Command
                 'The namespace containing your class',
                 'Application'
             )
+            ->addOption(
+                'template',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'The template determining the style of PHP class you want',
+                'default'
+            )
             ->addArgument(
                 'classname',
                 InputArgument::REQUIRED,
@@ -160,14 +202,28 @@ class PhpClassCommand extends Command
             );
     }
 
-    protected function getSourceFileName()
+    protected function getSourceFileName($template)
     {
-        return 'php-class.php';
+        return match ($template) {
+            'wordpress' => 'wordpress-class.php',
+            'default' => 'php-class.php',
+        };
     }
 
     protected function getDestinationFileName($className)
     {
         return $className . '.php';
+    }
+
+    protected function hasConfigFile()
+    {
+        foreach($this->path->getConfigFiles() as $configFile)  {
+            if (file_exists($configFile)) { 
+                return $configFile;
+            } 
+        }
+
+        return false;
     }
 
 }
