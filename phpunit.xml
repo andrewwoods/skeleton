@@ -1,8 +1,15 @@
 <phpunit bootstrap="vendor/autoload.php" colors="true">
+  <php>
+    <env name="HOME" value="/Users/account-name" force="true"/>
+    <server name="HOME" value="/Users/account-name" force="true"/>
+    <env name="XDG_CONFIG_HOME" value="/Users/account-name/.config" force="true"/>
+    <server name="XDG_CONFIG_HOME" value="/Users/account-name/.config" force="true"/>
+    <env name="XDG_DATA_HOME" value="/Users/account-name/.local/share" force="true"/>
+    <server name="XDG_DATA_HOME" value="/Users/account-name/.local/share" force="true"/>
+  </php>
   <testsuites>
     <testsuite name="Core">
       <directory>tests</directory>
     </testsuite>
   </testsuites>
 </phpunit>
-

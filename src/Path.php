@@ -42,12 +42,8 @@ class Path
     {
         $templateDir = $this->getSkeletonDir() . '/templates';
         if ($subdir) {
-            $templateDir = "{$templateDir}/" . $subdir;
+            $templateDir = "{$templateDir}/{$subdir}";
         }
-        if (! file_exists($templateDir)) {
-            $message = sprintf("The directory '%s' does not exist", $templateDir);
-            throw new InvalidArgumentException($message);
-        } 
         return $templateDir;
     }
 
