@@ -2,7 +2,7 @@
 
 namespace Skel\Commands;
 
-use Skel\Document;
+use Skel\Docs;
 use Skel\Path;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -47,16 +47,15 @@ class CreateDocsCommand extends Command
         $arg = [];
         $arg['names'] = $input->getArgument('names');
         if (count($arg['names']) === 0 || $arg['names'][0] === self::$defaultDoc ) {
-            $arg['names'] = ['readme', 'changelog', 'contributing', 'humans'];
+            $arg['names'] = [ Docs::CHANGELOG, Docs::CONTRIBUTING, Docs::HUMANS, Docs::README ];
         }
 
-        $document = new Document();
         foreach ($arg['names'] as $doc) {
 
             $pathSource = $this->path->getSkeletonDir() . '/'
-                . $document->getSourceFileName($doc);
+                . Docs::getSourceFileName($doc);
             $pathTo = $this->path->getUserProjectDir() . '/'
-                . $document->getDestinationFileName($doc);
+                . Docs::getDestinationFileName($doc);
 
             copy($pathSource, $pathTo);
         }

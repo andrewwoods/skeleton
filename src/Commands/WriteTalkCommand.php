@@ -4,7 +4,6 @@ namespace Skel\Commands;
 
 use AndrewWoods\ChicagoStyle\Content;
 use Skel\DateTrait;
-use Skel\Document;
 use Skel\Path;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -74,7 +73,6 @@ class WriteTalkCommand extends Command
         $arg = [];
         $arg['filename'] = $input->getArgument('filename') ?? null;
 
-        $document = new Document();
 
         $pathSource = $this->path->getTemplatePath()
         . '/' . $this->getSourceFileName($option['type']);
