@@ -82,10 +82,10 @@ class PhpClassCommand extends Command
                 );
             } else {
                 $io->success(
-                  [
+                    [
                     'Config file found',
                     $configFile
-                  ]
+                    ]
                 );
             }
         }
@@ -236,9 +236,10 @@ class PhpClassCommand extends Command
     protected function getSourceFileName($template)
     {
         return match ($template) {
+            'enum' => 'php-enum.php',
             'phpunit' => 'phpunit-class.php',
             'wordpress' => 'wordpress-class.php',
-            'default' => 'php-class.php',
+            default => 'php-class.php',
         };
     }
 
